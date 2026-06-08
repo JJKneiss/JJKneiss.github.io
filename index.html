@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jamie — Web Developer</title>
+  <title>Jamie Kneiss — Web Developer</title>
+  <meta name="description" content="Jamie Kneiss — Web developer based in Pittsburgh, PA. Building tools, client sites, and interactive experiences.">
+  <meta property="og:title" content="Jamie Kneiss — Web Developer">
+  <meta property="og:description" content="Web developer based in Pittsburgh, PA. Building tools, client sites, and interactive experiences.">
+  <meta property="og:url" content="https://jjkneiss.github.io/">
+  <meta property="og:type" content="website">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -23,6 +28,9 @@
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
 
+    /* ── SKIP LINK ── */
+    .skip-link { position: absolute; top: -40px; left: 1rem; background: var(--accent); color: #0a0a0a; padding: 0.5rem 1rem; border-radius: 2px; font-size: 13px; font-weight: 500; text-decoration: none; z-index: 9999; transition: top 0.15s; }
+    .skip-link:focus { top: 1rem; }
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
@@ -32,7 +40,7 @@
     }
     .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.08em; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 1.75rem; list-style: none; }
-    .nav-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; transition: color 0.15s; }
+    .nav-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); text-decoration: none; transition: color 0.15s; }
     .nav-links a:hover { color: var(--ink); }
 
     /* ── HERO ── */
@@ -49,7 +57,7 @@
 
     /* ── SECTION HEADER ── */
     .section { padding: 5rem 2rem; max-width: 860px; margin: 0 auto; }
-    .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); font-family: 'DM Mono', monospace; margin-bottom: 0.6rem; }
+    .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-2); font-family: 'DM Mono', monospace; margin-bottom: 0.6rem; }
     .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.5rem; }
     .section-desc { font-size: 0.95rem; color: var(--ink-2); max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
     .divider { border: none; border-top: 0.5px solid var(--border); }
@@ -64,14 +72,14 @@
     .work-card-desc { font-size: 12px; color: var(--ink-2); line-height: 1.6; flex: 1; }
     .work-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.25rem; }
     .work-card-tech { display: flex; gap: 6px; flex-wrap: wrap; }
-    .tech-pill { font-size: 9px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-3); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 2px 7px; }
+    .tech-pill { font-size: 9px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-2); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 2px 7px; }
     .work-arrow { font-size: 12px; color: var(--accent); transition: transform 0.15s; }
 
     /* ── BIO ── */
     .bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
     @media (max-width: 600px) { .bio-grid { grid-template-columns: 1fr; } }
     .bio-block { display: flex; flex-direction: column; gap: 0.5rem; }
-    .bio-block-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-3); }
+    .bio-block-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-2); }
     .bio-block-text { font-size: 0.9rem; color: var(--ink-2); line-height: 1.7; }
     .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
     .skill-tag { font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; color: var(--ink-2); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 3px 9px; }
@@ -88,8 +96,8 @@
 
     /* ── FOOTER ── */
     footer { border-top: 0.5px solid var(--border); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-    .footer-name { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: var(--ink-3); }
-    .footer-note { font-size: 10px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-3); }
+    .footer-name { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: var(--ink-2); }
+    .footer-note { font-size: 10px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-2); }
 
     @media (max-width: 600px) {
       nav { padding: 1rem; }
@@ -100,9 +108,10 @@
   </style>
 </head>
 <body>
+<a class="skip-link" href="#work">Skip to content</a>
 
-<nav>
-  <a class="nav-logo" href="#">Jamie</a>
+<nav aria-label="Main navigation">
+  <a class="nav-logo" href="#">Jamie Kneiss</a>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
@@ -112,9 +121,9 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-label">Web Developer — Pittsburgh, PA</div>
+  <div class="hero-label">Jamie Kneiss — Web Developer, Pittsburgh PA</div>
   <h1 class="hero-title">Building tools<br>that <em>actually</em><br>get used.</h1>
-  <p class="hero-desc">I build clean, functional web tools — standalone apps, client sites, and interactive experiences. Background in HTML, CSS, JavaScript, PHP, and WordPress. Currently training toward a career in martial arts instruction while taking on freelance work.</p>
+  <p class="hero-desc">I build clean, functional web tools — standalone apps, client sites, and interactive experiences. Background in HTML, CSS, JavaScript, PHP, and WordPress. Currently deepening my knowledge of React, Next.js, and modern front-end tooling while taking on freelance work.</p>
   <div class="hero-actions">
     <a class="btn-primary" href="#work">See the work</a>
     <a class="btn-ghost" href="#contact">Get in touch</a>
@@ -125,7 +134,7 @@
 
 <!-- WORK -->
 <section class="section" id="work">
-  <div class="section-label">Portfolio</div>
+  <p class="section-label" aria-hidden="true">Portfolio</p>
   <h2 class="section-title">Selected Work</h2>
   <p class="section-desc">Six standalone tools built as portfolio pieces — each solving a real problem, each a single HTML file with no dependencies.</p>
 
@@ -215,7 +224,7 @@
 
   <div class="work-grid">
 
-    <a class="work-card" href="https://mcclaw.com/" target="_blank" rel="noopener">
+    <a class="work-card" href="https://mcclaw.com/" target="_blank" rel="noopener" aria-label="McCormick Law Firm website (opens in new tab)">
       <div class="work-card-tag">WordPress · Law</div>
       <div class="work-card-title">McCormick Law Firm</div>
       <div class="work-card-desc">Full website build for a law firm. Clean, professional design focused on trust and clarity — practice areas, attorney profiles, and contact.</div>
@@ -228,7 +237,7 @@
       </div>
     </a>
 
-    <a class="work-card" href="https://families4kids.org/" target="_blank" rel="noopener">
+    <a class="work-card" href="https://families4kids.org/" target="_blank" rel="noopener" aria-label="Families United Network website (opens in new tab)">
       <div class="work-card-tag">WordPress · Nonprofit</div>
       <div class="work-card-title">Families United Network</div>
       <div class="work-card-desc">Website for an adoption and foster care agency. Warm, accessible design with resource pages, family stories, and clear calls to action.</div>
@@ -241,7 +250,7 @@
       </div>
     </a>
 
-    <a class="work-card" href="https://lycomingprecast.com/" target="_blank" rel="noopener">
+    <a class="work-card" href="https://lycomingprecast.com/" target="_blank" rel="noopener" aria-label="Lycoming Vault and Precast website (opens in new tab)">
       <div class="work-card-tag">WordPress · Manufacturing</div>
       <div class="work-card-title">Lycoming Vault & Precast</div>
       <div class="work-card-desc">Website for a concrete precast product manufacturer. Product catalog, specifications, and contact — built for a trade audience.</div>
@@ -249,6 +258,18 @@
         <div class="work-card-tech">
           <span class="tech-pill">WordPress</span>
           <span class="tech-pill">PHP</span>
+        </div>
+        <span class="work-arrow">↗</span>
+      </div>
+
+    <a class="work-card" href="charte-redesign/index.html" target="_blank" rel="noopener" aria-label="CHARTE Center redesign mockup (opens in new tab)">
+      <div class="work-card-tag">Redesign · Healthcare</div>
+      <div class="work-card-title">CHARTE Center</div>
+      <div class="work-card-desc">Site redesign mockup for a local psychotherapy clinic. Includes HTML mockups and a full CSS design system — typography, color, spacing, and component library.</div>
+      <div class="work-card-footer">
+        <div class="work-card-tech">
+          <span class="tech-pill">HTML</span>
+          <span class="tech-pill">CSS</span>
         </div>
         <span class="work-arrow">↗</span>
       </div>
@@ -261,7 +282,7 @@
 
 <!-- ABOUT -->
 <section class="section" id="about">
-  <div class="section-label">About</div>
+  <p class="section-label" aria-hidden="true">About</p>
   <h2 class="section-title">Background</h2>
   <p class="section-desc">Developer, martial artist, and lifelong student. I build things that solve real problems and hold up under use.</p>
 
@@ -298,6 +319,7 @@
         <span class="skill-tag">Data Analytics</span>
         <span class="skill-tag">Sports Performance</span>
         <span class="skill-tag">Physical Therapy Tech</span>
+        <span class="skill-tag">Brazilian Jiu-Jitsu</span>
       </div>
     </div>
   </div>
@@ -307,21 +329,22 @@
 
 <!-- CONTACT -->
 <section class="section" id="contact">
-  <div class="section-label">Contact</div>
+  <p class="section-label" aria-hidden="true">Contact</p>
   <div class="contact-card">
-    <h2 class="contact-title">Let's work together.</h2>
-    <p class="contact-desc">Open to freelance web development work — client sites, custom tools, WordPress builds, and consulting. Based in Pittsburgh, PA. Available remotely.</p>
+    <h2 class="contact-title" id="contact-heading">Let's work together.</h2>
+    <p class="contact-desc">Open to full-time roles and freelance work — client sites, custom tools, WordPress builds, and consulting. Based in Pittsburgh, PA. Available remotely.</p>
     <div class="contact-links">
-      <a class="contact-link accent" href="mailto:your@email.com">✉ Email me</a>
-      <a class="contact-link" href="https://github.com/" target="_blank">GitHub</a>
-      <a class="contact-link" href="https://www.instagram.com/middlewaymma" target="_blank">@middlewaymma</a>
+      <a class="contact-link accent" href="mailto:jamiejk@icloud.com">✉ Email me</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/jjkneiss/" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in new tab)">LinkedIn</a>
+      <a class="contact-link" href="https://github.com/JJKneiss" target="_blank" rel="noopener" aria-label="GitHub profile (opens in new tab)">GitHub</a>
+      <a class="contact-link" href="https://www.instagram.com/middlewaymma" target="_blank" rel="noopener" aria-label="Instagram @middlewaymma (opens in new tab)">@middlewaymma</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <span class="footer-name">Jamie</span>
-  <span class="footer-note">Built with HTML, CSS & JS — no frameworks, no build step.</span>
+  <span class="footer-name">Jamie Kneiss</span>
+  <span class="footer-note">© 2026 Jamie Kneiss · Built with HTML, CSS & JS</span>
 </footer>
 
 </body>
