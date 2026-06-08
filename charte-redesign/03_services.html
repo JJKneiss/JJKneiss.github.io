@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHARTE Center — Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;font-size:15px}
+a{text-decoration:none;color:inherit}
+:root{
+  --green:#1D9E75;--deep:#085041;--mid:#0F6E56;--dark:#04342C;
+  --light:#9FE1CB;--teal5:#5DCAA5;--pale:#E1F5EE;--vpale:#F2FAF6;
+  --gray:#5a5a5a;--lgray:#e0e0e0;--fbg:#f6f6f4;
+}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:0.5px solid var(--lgray);background:#fff;position:sticky;top:0;z-index:100}
+.nav-logo-top{font-family:'DM Serif Display',serif;font-size:20px;color:var(--green);letter-spacing:.04em}
+.nav-logo-sub{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-top:1px}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--gray);transition:color .15s}
+.nav-links a:hover,.nav-links a.cur{color:var(--green)}
+.nav-links a.cur{border-bottom:1.5px solid var(--green);padding-bottom:1px}
+.nav-cta{background:var(--green);color:#fff;font-size:13px;font-weight:500;padding:9px 20px;border-radius:40px}
+.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:500;margin-bottom:12px}
+
+.page-hero{background:var(--deep);padding:48px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.page-hero-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--light);font-weight:500;margin-bottom:14px}
+.page-hero-title{font-family:'DM Serif Display',serif;font-size:34px;line-height:1.15;color:#fff;margin-bottom:12px}
+.page-hero-title em{font-style:italic;color:var(--light)}
+.page-hero-body{font-size:13.5px;line-height:1.75;color:var(--teal5)}
+.hero-stat-card{background:var(--mid);border-radius:10px;padding:18px 20px;margin-bottom:10px}
+.hero-stat-num{font-family:'DM Serif Display',serif;font-size:26px;color:var(--light)}
+.hero-stat-label{font-size:11px;color:var(--teal5);margin-top:3px}
+
+.ins-section{background:var(--fbg);border-bottom:0.5px solid var(--lgray);padding:32px 40px}
+.sec-title{font-family:'DM Serif Display',serif;font-size:26px;color:#1a1a1a;margin-top:8px;margin-bottom:20px}
+.body-text{font-size:13.5px;line-height:1.8;color:var(--gray);margin-bottom:12px}
+.ins-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ins-pill{background:#fff;border:0.5px solid var(--lgray);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--gray)}
+
+.section{padding:48px 40px}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:0}
+.svc-big{border-radius:12px;border:0.5px solid var(--lgray);overflow:hidden;background:var(--fbg)}
+.svc-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:40px}
+.svc-img.c1{background:var(--deep)}.svc-img.c2{background:var(--mid)}.svc-img.c3{background:var(--green)}
+.svc-content{padding:20px}
+.svc-title{font-weight:500;font-size:14px;color:var(--deep);margin-bottom:8px}
+.svc-body{font-size:12.5px;line-height:1.65;color:var(--gray)}
+
+.mod-section{background:var(--vpale);border-radius:12px;border:0.5px solid var(--light);padding:32px;margin:0 40px 48px}
+.mod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.mod-pill{background:#fff;border:0.5px solid var(--light);border-radius:8px;padding:14px 16px}
+.mod-pill-title{font-size:13px;font-weight:500;color:var(--deep)}
+.mod-pill-sub{font-size:11px;color:var(--mid);margin-top:3px}
+
+.cta-bar{background:var(--deep);padding:38px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.cta-text{font-family:'DM Serif Display',serif;font-size:24px;color:#fff}
+.cta-text em{font-style:italic;color:var(--light)}
+.cta-actions{display:flex;align-items:center;gap:16px}
+.btn-p{background:var(--green);color:#fff;font-size:13px;font-weight:500;padding:12px 24px;border-radius:40px;transition:opacity .15s}
+.btn-p:hover{opacity:.88}
+.cta-phone{font-size:13px;font-weight:500;color:var(--light);display:flex;align-items:center;gap:6px}
+
+footer{background:var(--dark);padding:32px 40px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.foot-logo{font-family:'DM Serif Display',serif;font-size:17px;color:var(--light);margin-bottom:8px}
+.foot-tag{font-size:11.5px;color:var(--teal5);line-height:1.7;max-width:240px}
+.foot-phone{font-size:12px;color:var(--light);margin-top:12px}
+.foot-col-title{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal5);margin-bottom:12px;font-weight:500}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.foot-links a{font-size:12px;color:var(--light)}
+.foot-bottom{background:var(--dark);border-top:0.5px solid var(--deep);padding:12px 40px;font-size:10.5px;color:var(--deep);display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<nav>
+  <div>
+    <div class="nav-logo-top">CHARTE Center</div>
+    <div class="nav-logo-sub">Allegheny County, PA</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="01_home.html">Home</a></li>
+    <li><a href="02_about.html">About us</a></li>
+    <li><a href="03_services.html" class="cur">Services</a></li>
+    <li><a href="05_blog.html">Blog</a></li>
+    <li><a href="04_contact.html">Contact</a></li>
+  </ul>
+  <a href="04_contact.html" class="nav-cta">Request appointment</a>
+</nav>
+
+<div class="page-hero">
+  <div>
+    <p class="page-hero-eyebrow">What we offer</p>
+    <h1 class="page-hero-title">Care that <em>fits</em> every individual</h1>
+    <p class="page-hero-body">From one-on-one therapy to community-based habilitation support, CHARTE Center provides a continuum of services for clients of all ages, abilities, and backgrounds.</p>
+  </div>
+  <div>
+    <div class="hero-stat-card"><div class="hero-stat-num">3 core</div><div class="hero-stat-label">Service areas: therapy, hab services, behavioral supports</div></div>
+    <div class="hero-stat-card"><div class="hero-stat-num">10+ plans</div><div class="hero-stat-label">Insurance contracts accepted</div></div>
+  </div>
+</div>
+
+<div class="ins-section">
+  <p class="eyebrow">Insurance &amp; access</p>
+  <h2 class="sec-title" style="margin-bottom:10px">Who we serve</h2>
+  <p class="body-text">Both clinicians and the agency are contracted to major insurance providers, giving clients across Allegheny County access to quality care regardless of their plan.</p>
+  <div class="ins-pills">
+    <span class="ins-pill">Highmark</span><span class="ins-pill">UPMC</span><span class="ins-pill">Medicare</span>
+    <span class="ins-pill">Health America</span><span class="ins-pill">Cigna</span><span class="ins-pill">Aetna</span>
+    <span class="ins-pill">United Healthcare</span><span class="ins-pill">PA Health &amp; Wellness</span>
+    <span class="ins-pill">AmeriHealth Caritas</span><span class="ins-pill">Value Behavioral Health</span>
+  </div>
+</div>
+
+<div class="section">
+  <p class="eyebrow">Core services</p>
+  <h2 class="sec-title">Three pillars of care</h2>
+  <div class="svc-grid">
+    <div class="svc-big">
+      <div class="svc-img c1">💙</div>
+      <div class="svc-content">
+        <div class="svc-title">Individual therapy</div>
+        <div class="svc-body">Our experienced staff works one-on-one with clients in the office to provide a therapeutic outlet, working together to foster growth, resilience, and lasting change. Available to children and adults of all ages and diagnoses.</div>
+      </div>
+    </div>
+    <div class="svc-big">
+      <div class="svc-img c2">🏡</div>
+      <div class="svc-content">
+        <div class="svc-title">Habilitation services</div>
+        <div class="svc-body">Hab Aide staff work closely with clients in the community to set meaningful goals and help them achieve greater independence and quality of life — one day at a time. Designed for individuals with intellectual and developmental disabilities.</div>
+      </div>
+    </div>
+    <div class="svc-big">
+      <div class="svc-img c3">🛡</div>
+      <div class="svc-content">
+        <div class="svc-title">Behavioral supports</div>
+        <div class="svc-body">Behavioral Support Counselors work closely with autistic and developmentally disabled clients to build skills, reduce barriers, and empower them to thrive within their community and across life settings.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mod-section">
+  <p class="eyebrow">Therapeutic approaches</p>
+  <h2 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--deep);margin-top:6px">Evidence-based modalities we use</h2>
+  <div class="mod-grid">
+    <div class="mod-pill"><div class="mod-pill-title">Cognitive behavioral therapy</div><div class="mod-pill-sub">CBT</div></div>
+    <div class="mod-pill"><div class="mod-pill-title">Dialectical behavior therapy</div><div class="mod-pill-sub">DBT</div></div>
+    <div class="mod-pill"><div class="mod-pill-title">Transactional analysis</div><div class="mod-pill-sub">TA</div></div>
+    <div class="mod-pill"><div class="mod-pill-title">Family therapy</div><div class="mod-pill-sub">Systems approach</div></div>
+    <div class="mod-pill"><div class="mod-pill-title">Group therapy</div><div class="mod-pill-sub">Peer-based</div></div>
+    <div class="mod-pill"><div class="mod-pill-title">Bio-psychosocial assessment</div><div class="mod-pill-sub">CASSP-aligned</div></div>
+  </div>
+</div>
+
+<div class="cta-bar">
+  <div class="cta-text">Ready to take the <em>first step?</em></div>
+  <div class="cta-actions">
+    <a href="04_contact.html" class="btn-p">Schedule a consultation</a>
+    <span class="cta-phone">📞 412.745.8700</span>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <div class="foot-logo">CHARTE Center</div>
+    <div class="foot-tag">Quality therapeutic interventions with respect and dignity in Allegheny County, PA.</div>
+    <div class="foot-phone">📞 412.745.8700</div>
+  </div>
+  <div>
+    <div class="foot-col-title">Navigate</div>
+    <ul class="foot-links">
+      <li><a href="01_home.html">Home</a></li>
+      <li><a href="02_about.html">About us</a></li>
+      <li><a href="03_services.html">Services</a></li>
+      <li><a href="05_blog.html">Blog</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="foot-col-title">Reach us</div>
+    <ul class="foot-links">
+      <li><a href="04_contact.html">Contact us</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Facebook</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="foot-bottom">
+  <span>© 2026 CHARTE Center Inc.</span>
+  <span>5725 Forward Ave #100 · Pittsburgh, PA 15217</span>
+</div>
+
+</body>
+</html>

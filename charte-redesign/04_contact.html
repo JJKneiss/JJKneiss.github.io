@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHARTE Center — Contact Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;font-size:15px}
+a{text-decoration:none;color:inherit}
+:root{
+  --green:#1D9E75;--deep:#085041;--mid:#0F6E56;--dark:#04342C;
+  --light:#9FE1CB;--teal5:#5DCAA5;--pale:#E1F5EE;--vpale:#F2FAF6;
+  --gray:#5a5a5a;--lgray:#e0e0e0;--fbg:#f6f6f4;
+}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:0.5px solid var(--lgray);background:#fff;position:sticky;top:0;z-index:100}
+.nav-logo-top{font-family:'DM Serif Display',serif;font-size:20px;color:var(--green);letter-spacing:.04em}
+.nav-logo-sub{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-top:1px}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--gray);transition:color .15s}
+.nav-links a:hover,.nav-links a.cur{color:var(--green)}
+.nav-links a.cur{border-bottom:1.5px solid var(--green);padding-bottom:1px}
+.nav-cta{background:var(--green);color:#fff;font-size:13px;font-weight:500;padding:9px 20px;border-radius:40px}
+.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:500;margin-bottom:12px}
+
+.page-hero{background:var(--deep);padding:40px 40px}
+.page-hero-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--light);font-weight:500;margin-bottom:12px}
+.page-hero-title{font-family:'DM Serif Display',serif;font-size:30px;line-height:1.15;color:#fff;margin-bottom:10px}
+.page-hero-body{font-size:13.5px;line-height:1.75;color:var(--teal5);max-width:520px}
+
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;min-height:500px}
+.form-side{padding:48px 40px;border-right:0.5px solid var(--lgray)}
+.form-title{font-family:'DM Serif Display',serif;font-size:26px;color:#1a1a1a;margin-bottom:8px}
+.form-sub{font-size:13.5px;color:var(--gray);line-height:1.6;margin-bottom:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:10px;font-weight:500;color:var(--gray);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 13px;border:0.5px solid var(--lgray);border-radius:8px;font-size:13.5px;color:#1a1a1a;font-family:'DM Sans',sans-serif;background:#fafafa;transition:border-color .15s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--green)}
+.form-textarea{resize:none;height:110px}
+.submit-btn{width:100%;background:var(--green);color:#fff;font-size:14px;font-weight:500;padding:13px;border-radius:40px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;transition:opacity .15s}
+.submit-btn:hover{opacity:.88}
+
+.info-side{background:var(--deep);padding:48px 36px;display:flex;flex-direction:column;gap:28px}
+.info-title{font-family:'DM Serif Display',serif;font-size:24px;color:#fff}
+.map-mini{border-radius:10px;overflow:hidden;margin-bottom:4px}
+.map-mini svg{width:100%;display:block}
+.info-blocks{display:flex;flex-direction:column;gap:18px}
+.info-block{display:flex;align-items:flex-start;gap:14px}
+.info-block-icon{width:36px;height:36px;background:var(--mid);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.info-block-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal5);margin-bottom:3px}
+.info-block-value{font-size:13px;color:#fff;line-height:1.6}
+.hours-table{font-size:12px;border-collapse:collapse;width:100%}
+.hours-table td{padding:2px 0}
+.hours-table .day{color:var(--teal5);width:80px}
+.hours-table .time{color:#fff}
+.dir-btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;font-size:13px;font-weight:500;padding:11px 22px;border-radius:40px;transition:opacity .15s;align-self:flex-start}
+.dir-btn:hover{opacity:.88}
+
+.ins-section{padding:48px 40px;background:var(--fbg)}
+.sec-title{font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a1a;margin-top:8px;margin-bottom:18px}
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ins-card{background:#fff;border:0.5px solid var(--lgray);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--deep);display:flex;align-items:center;gap:8px}
+.ins-check{color:var(--green);font-weight:500}
+
+footer{background:var(--dark);padding:32px 40px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.foot-logo{font-family:'DM Serif Display',serif;font-size:17px;color:var(--light);margin-bottom:8px}
+.foot-tag{font-size:11.5px;color:var(--teal5);line-height:1.7;max-width:240px}
+.foot-phone{font-size:12px;color:var(--light);margin-top:12px}
+.foot-col-title{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal5);margin-bottom:12px;font-weight:500}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.foot-links a{font-size:12px;color:var(--light)}
+.foot-bottom{background:var(--dark);border-top:0.5px solid var(--deep);padding:12px 40px;font-size:10.5px;color:var(--deep);display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<nav>
+  <div>
+    <div class="nav-logo-top">CHARTE Center</div>
+    <div class="nav-logo-sub">Allegheny County, PA</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="01_home.html">Home</a></li>
+    <li><a href="02_about.html">About us</a></li>
+    <li><a href="03_services.html">Services</a></li>
+    <li><a href="05_blog.html">Blog</a></li>
+    <li><a href="04_contact.html" class="cur">Contact</a></li>
+  </ul>
+  <a href="04_contact.html" class="nav-cta">Request appointment</a>
+</nav>
+
+<div class="page-hero">
+  <p class="page-hero-eyebrow">Get in touch</p>
+  <h1 class="page-hero-title">We'd love to hear from you</h1>
+  <p class="page-hero-body">Whether you're ready to schedule an appointment, have a question about services, or just want to learn more — reach out and we'll get back to you promptly.</p>
+</div>
+
+<div class="contact-layout">
+  <div class="form-side">
+    <h2 class="form-title">Send us a message</h2>
+    <p class="form-sub">Fill out the form and a member of our team will be in touch within one business day.</p>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">First name</label><input class="form-input" type="text" placeholder="First name"></div>
+      <div class="form-group"><label class="form-label">Last name</label><input class="form-input" type="text" placeholder="Last name"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Email address</label><input class="form-input" type="email" placeholder="you@email.com"></div>
+    <div class="form-group"><label class="form-label">Phone number</label><input class="form-input" type="tel" placeholder="412-000-0000"></div>
+    <div class="form-group">
+      <label class="form-label">Reason for contact</label>
+      <select class="form-select">
+        <option>Request an appointment</option>
+        <option>Question about services</option>
+        <option>Insurance inquiry</option>
+        <option>Referral</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Tell us a bit about what you're looking for..."></textarea></div>
+    <button class="submit-btn">Send message</button>
+  </div>
+  <div class="info-side">
+    <div>
+      <p class="eyebrow" style="color:var(--teal5)">Find us</p>
+      <div class="info-title">Our office in Squirrel Hill</div>
+    </div>
+    <div class="map-mini">
+      <svg viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
+        <rect width="280" height="160" fill="#EDF7F3"/>
+        <rect x="4" y="4" width="55" height="30" rx="2" fill="#C8E8DC"/>
+        <rect x="67" y="4" width="60" height="30" rx="2" fill="#C8E8DC"/>
+        <rect x="135" y="4" width="50" height="30" rx="2" fill="#C8E8DC"/>
+        <rect x="193" y="4" width="83" height="30" rx="2" fill="#C8E8DC"/>
+        <rect x="0" y="34" width="280" height="8" fill="#fff" opacity="0.9"/>
+        <rect x="4" y="48" width="50" height="38" rx="2" fill="#C8E8DC"/>
+        <rect x="62" y="48" width="68" height="38" rx="2" fill="#D8F0E6"/>
+        <rect x="138" y="48" width="52" height="38" rx="2" fill="#C8E8DC"/>
+        <rect x="198" y="48" width="78" height="38" rx="2" fill="#C8E8DC"/>
+        <rect x="0" y="86" width="280" height="8" fill="#fff" opacity="0.9"/>
+        <rect x="4" y="100" width="80" height="56" rx="2" fill="#C8E8DC"/>
+        <rect x="92" y="100" width="68" height="56" rx="2" fill="#C8E8DC"/>
+        <rect x="168" y="100" width="108" height="56" rx="2" fill="#C8E8DC"/>
+        <rect x="122" y="0" width="8" height="160" fill="#fff" opacity="0.9"/>
+        <rect x="192" y="0" width="8" height="160" fill="#fff" opacity="0.9"/>
+        <circle cx="126" cy="67" r="12" fill="#085041"/>
+        <circle cx="126" cy="67" r="8" fill="#1D9E75"/>
+        <circle cx="126" cy="67" r="3" fill="white"/>
+        <circle cx="126" cy="67" r="17" fill="none" stroke="#1D9E75" stroke-width="1.5" opacity="0.4"/>
+        <rect x="74" y="48" width="104" height="14" rx="3" fill="#085041"/>
+        <text x="126" y="59" text-anchor="middle" fill="#9FE1CB" font-size="8" font-family="DM Sans,sans-serif" font-weight="500">5725 Forward Ave #100</text>
+      </svg>
+    </div>
+    <div class="info-blocks">
+      <div class="info-block">
+        <div class="info-block-icon">📍</div>
+        <div><div class="info-block-label">Address</div><div class="info-block-value">5725 Forward Avenue, Suite 100<br>Pittsburgh, PA 15217</div></div>
+      </div>
+      <div class="info-block">
+        <div class="info-block-icon">📞</div>
+        <div><div class="info-block-label">Phone &amp; fax</div><div class="info-block-value">p 412.745.8700<br>f 412.745.8706</div></div>
+      </div>
+      <div class="info-block">
+        <div class="info-block-icon">🕐</div>
+        <div>
+          <div class="info-block-label">Office hours</div>
+          <table class="hours-table">
+            <tr><td class="day">Mon – Thu</td><td class="time">9:00 AM – 7:00 PM</td></tr>
+            <tr><td class="day">Friday</td><td class="time">9:00 AM – 12:00 PM</td></tr>
+            <tr><td class="day">Sat – Sun</td><td class="time">Closed</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <a href="https://maps.google.com/?q=5725+Forward+Ave+Suite+100+Pittsburgh+PA+15217" class="dir-btn" target="_blank">🗺 Get directions</a>
+  </div>
+</div>
+
+<div class="ins-section">
+  <p class="eyebrow">Insurance</p>
+  <h2 class="sec-title">Accepted plans</h2>
+  <div class="ins-grid">
+    <div class="ins-card"><span class="ins-check">✓</span>Highmark</div>
+    <div class="ins-card"><span class="ins-check">✓</span>UPMC</div>
+    <div class="ins-card"><span class="ins-check">✓</span>Medicare</div>
+    <div class="ins-card"><span class="ins-check">✓</span>Aetna</div>
+    <div class="ins-card"><span class="ins-check">✓</span>United Healthcare</div>
+    <div class="ins-card"><span class="ins-check">✓</span>Value Behavioral Health</div>
+    <div class="ins-card"><span class="ins-check">✓</span>Health America</div>
+    <div class="ins-card"><span class="ins-check">✓</span>AmeriHealth Caritas</div>
+    <div class="ins-card"><span class="ins-check">✓</span>PA Health &amp; Wellness</div>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <div class="foot-logo">CHARTE Center</div>
+    <div class="foot-tag">Quality therapeutic interventions with respect and dignity in Allegheny County, PA.</div>
+    <div class="foot-phone">📞 412.745.8700</div>
+  </div>
+  <div>
+    <div class="foot-col-title">Navigate</div>
+    <ul class="foot-links">
+      <li><a href="01_home.html">Home</a></li>
+      <li><a href="02_about.html">About us</a></li>
+      <li><a href="03_services.html">Services</a></li>
+      <li><a href="05_blog.html">Blog</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="foot-col-title">Reach us</div>
+    <ul class="foot-links">
+      <li><a href="04_contact.html">Contact us</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Facebook</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="foot-bottom">
+  <span>© 2026 CHARTE Center Inc.</span>
+  <span>5725 Forward Ave #100 · Pittsburgh, PA 15217</span>
+</div>
+
+</body>
+</html>

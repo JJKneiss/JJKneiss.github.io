@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHARTE Center — Blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;font-size:15px}
+a{text-decoration:none;color:inherit}
+:root{
+  --green:#1D9E75;--deep:#085041;--mid:#0F6E56;--dark:#04342C;
+  --light:#9FE1CB;--teal5:#5DCAA5;--pale:#E1F5EE;--vpale:#F2FAF6;
+  --gray:#5a5a5a;--lgray:#e0e0e0;--fbg:#f6f6f4;
+}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:0.5px solid var(--lgray);background:#fff;position:sticky;top:0;z-index:100}
+.nav-logo-top{font-family:'DM Serif Display',serif;font-size:20px;color:var(--green);letter-spacing:.04em}
+.nav-logo-sub{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-top:1px}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--gray);transition:color .15s}
+.nav-links a:hover,.nav-links a.cur{color:var(--green)}
+.nav-links a.cur{border-bottom:1.5px solid var(--green);padding-bottom:1px}
+.nav-cta{background:var(--green);color:#fff;font-size:13px;font-weight:500;padding:9px 20px;border-radius:40px}
+.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:500;margin-bottom:12px}
+
+.page-hero{background:var(--deep);padding:48px 40px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+.page-hero-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--light);font-weight:500;margin-bottom:14px}
+.page-hero-title{font-family:'DM Serif Display',serif;font-size:34px;line-height:1.15;color:#fff;margin-bottom:12px}
+.page-hero-title em{font-style:italic;color:var(--light)}
+.page-hero-body{font-size:13.5px;line-height:1.75;color:var(--teal5)}
+.hero-pills{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.hero-pill{background:var(--mid);border-radius:20px;padding:7px 16px;font-size:11px;color:var(--light);white-space:nowrap}
+
+.filter-bar{padding:14px 40px;border-bottom:0.5px solid var(--lgray);background:var(--fbg);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-label{font-size:11px;color:var(--gray);font-weight:500;margin-right:4px}
+.fbtn{padding:5px 14px;border-radius:20px;font-size:11.5px;font-weight:500;cursor:pointer;border:0.5px solid var(--lgray);background:#fff;color:var(--gray);font-family:'DM Sans',sans-serif;transition:all .15s}
+.fbtn:hover{border-color:var(--green);color:var(--green)}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+
+.section{padding:40px 40px}
+.sec-title{font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a1a;margin-top:8px;margin-bottom:20px}
+
+/* FEATURED */
+.featured-card{display:grid;grid-template-columns:1fr 1fr;background:var(--fbg);border-radius:12px;border:0.5px solid var(--lgray);overflow:hidden;cursor:pointer;transition:box-shadow .15s}
+.featured-card:hover{box-shadow:0 4px 20px rgba(8,80,65,.12)}
+.feat-img{background:var(--deep);display:flex;align-items:center;justify-content:center;font-size:52px;min-height:220px}
+.feat-body{padding:30px 28px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.feat-badge{display:inline-flex;background:var(--pale);color:var(--deep);font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;align-self:flex-start}
+.feat-title{font-family:'DM Serif Display',serif;font-size:22px;line-height:1.3;color:#1a1a1a;transition:color .15s}
+.featured-card:hover .feat-title{color:var(--green)}
+.feat-excerpt{font-size:13px;line-height:1.7;color:var(--gray)}
+.feat-meta{display:flex;align-items:center;gap:14px;font-size:11.5px;color:var(--gray);flex-wrap:wrap}
+.read-link{display:inline-flex;align-items:center;gap:5px;color:var(--green);font-size:13px;font-weight:500}
+
+/* BLOG GRID */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.blog-card{background:var(--fbg);border-radius:12px;border:0.5px solid var(--lgray);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:box-shadow .15s}
+.blog-card:hover{box-shadow:0 4px 20px rgba(8,80,65,.1)}
+.card-img{height:88px;display:flex;align-items:center;justify-content:center;font-size:30px}
+.ci1{background:var(--deep)}.ci2{background:var(--mid)}.ci3{background:var(--green)}.ci4{background:var(--dark)}.ci5{background:var(--deep)}
+.card-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:7px}
+.card-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:500}
+.card-title{font-weight:500;font-size:13.5px;line-height:1.5;color:#1a1a1a;transition:color .15s}
+.blog-card:hover .card-title{color:var(--green)}
+.card-excerpt{font-size:12.5px;line-height:1.6;color:var(--gray);flex:1}
+.card-footer-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:0.5px solid var(--lgray)}
+.author-chip{display:flex;align-items:center;gap:7px}
+.adot{width:22px;height:22px;border-radius:50%;background:var(--pale);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:500;color:var(--deep)}
+.aname{font-size:11px;color:var(--gray)}
+.cdate{font-size:10px;color:var(--gray)}
+
+/* DOWNLOADS */
+.dl-section{margin:0 40px 40px;background:var(--vpale);border-radius:12px;padding:28px;border:0.5px solid var(--light)}
+.dl-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--deep);margin-bottom:16px}
+.dl-list{display:flex;flex-direction:column;gap:10px}
+.dl-item{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:8px;padding:13px 16px;border:0.5px solid var(--light)}
+.dl-left{display:flex;align-items:center;gap:12px}
+.dl-icon{width:34px;height:34px;background:var(--pale);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.dl-name{font-size:13px;font-weight:500;color:var(--deep)}
+.dl-sub{font-size:11px;color:var(--mid)}
+.dl-btn{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;color:var(--green);border:0.5px solid var(--green);border-radius:20px;padding:5px 12px}
+
+footer{background:var(--dark);padding:32px 40px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.foot-logo{font-family:'DM Serif Display',serif;font-size:17px;color:var(--light);margin-bottom:8px}
+.foot-tag{font-size:11.5px;color:var(--teal5);line-height:1.7;max-width:240px}
+.foot-phone{font-size:12px;color:var(--light);margin-top:12px}
+.foot-col-title{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal5);margin-bottom:12px;font-weight:500}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.foot-links a{font-size:12px;color:var(--light)}
+.foot-bottom{background:var(--dark);border-top:0.5px solid var(--deep);padding:12px 40px;font-size:10.5px;color:var(--deep);display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<nav>
+  <div>
+    <div class="nav-logo-top">CHARTE Center</div>
+    <div class="nav-logo-sub">Allegheny County, PA</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="01_home.html">Home</a></li>
+    <li><a href="02_about.html">About us</a></li>
+    <li><a href="03_services.html">Services</a></li>
+    <li><a href="05_blog.html" class="cur">Blog</a></li>
+    <li><a href="04_contact.html">Contact</a></li>
+  </ul>
+  <a href="04_contact.html" class="nav-cta">Request appointment</a>
+</nav>
+
+<div class="page-hero">
+  <div>
+    <p class="page-hero-eyebrow">Staff blog</p>
+    <h1 class="page-hero-title">Insights from our <em>clinicians</em></h1>
+    <p class="page-hero-body">Our team shares perspectives on mental health, behavioral therapy, autism, and wellbeing — written for clients, caregivers, and curious minds alike.</p>
+  </div>
+  <div class="hero-pills">
+    <div class="hero-pill">✍ Written by our clinicians</div>
+    <div class="hero-pill">👥 For clients &amp; caregivers</div>
+    <div class="hero-pill">📅 Updated regularly</div>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter by:</span>
+  <button class="fbtn on">All posts</button>
+  <button class="fbtn">Mental health</button>
+  <button class="fbtn">Autism &amp; IDD</button>
+  <button class="fbtn">Wellness</button>
+  <button class="fbtn">Caregivers</button>
+  <button class="fbtn">Research</button>
+</div>
+
+<div class="section">
+  <p class="eyebrow">Featured post</p>
+  <a href="06_post.html" class="featured-card" style="display:grid">
+    <div class="feat-img">🧠</div>
+    <div class="feat-body">
+      <span class="feat-badge">Mental health</span>
+      <div class="feat-title">What is CBT, and how can it help you?</div>
+      <p class="feat-excerpt">Cognitive behavioral therapy is one of the most well-studied forms of psychotherapy — but what does it actually look like in practice? Howard Dobrushin breaks down the core principles and explains why CHARTE Center has made it a cornerstone of our work.</p>
+      <div class="feat-meta">
+        <span>👤 Howard Dobrushin, LPC</span>
+        <span>📅 March 2025</span>
+        <span>⏱ 6 min read</span>
+      </div>
+      <span class="read-link">Read post →</span>
+    </div>
+  </a>
+</div>
+
+<div class="section" style="padding-top:0">
+  <p class="eyebrow">All posts</p>
+  <h2 class="sec-title">Latest from the team</h2>
+  <div class="blog-grid">
+    <a href="06_post.html" class="blog-card">
+      <div class="card-img ci2">🌿</div>
+      <div class="card-body">
+        <span class="card-tag">Wellness</span>
+        <div class="card-title">5 things to do to feel better during spring allergy season</div>
+        <div class="card-excerpt">Managing symptoms when the season shifts — practical strategies for clients with respiratory sensitivities and mood changes.</div>
+      </div>
+      <div class="card-footer-row"><div class="author-chip"><div class="adot">CC</div><div class="aname">Callie Cooper, LSW</div></div><div class="cdate">Apr 2025</div></div>
+    </a>
+    <a href="06_post.html" class="blog-card">
+      <div class="card-img ci1">🏡</div>
+      <div class="card-body">
+        <span class="card-tag">Wellness</span>
+        <div class="card-title">Spring cleaning with allergies &amp; asthma</div>
+        <div class="card-excerpt">Seasonal cleaning can trigger symptoms for many clients. Here's how to approach the annual reset safely and without overwhelming your system.</div>
+      </div>
+      <div class="card-footer-row"><div class="author-chip"><div class="adot">CC</div><div class="aname">Callie Cooper, LSW</div></div><div class="cdate">Mar 2025</div></div>
+    </a>
+    <a href="06_post.html" class="blog-card">
+      <div class="card-img ci3">🌳</div>
+      <div class="card-body">
+        <span class="card-tag">Mental health</span>
+        <div class="card-title">Why spending time outdoors improves your mental health</div>
+        <div class="card-excerpt">Just 20 minutes in a green space can lower cortisol levels and improve mood. Here's the science behind nature and wellbeing.</div>
+      </div>
+      <div class="card-footer-row"><div class="author-chip"><div class="adot">HD</div><div class="aname">Howard Dobrushin, LPC</div></div><div class="cdate">Feb 2025</div></div>
+    </a>
+    <a href="06_post.html" class="blog-card">
+      <div class="card-img ci4">💻</div>
+      <div class="card-body">
+        <span class="card-tag">Research</span>
+        <div class="card-title">Blue light from screens: what the research actually says</div>
+        <div class="card-excerpt">A breakdown of the latest findings on blue light and long-term eyesight — what it means for clients who spend significant time on devices.</div>
+      </div>
+      <div class="card-footer-row"><div class="author-chip"><div class="adot">HD</div><div class="aname">Howard Dobrushin, LPC</div></div><div class="cdate">Jan 2025</div></div>
+    </a>
+    <a href="06_post.html" class="blog-card">
+      <div class="card-img ci2">🎓</div>
+      <div class="card-body">
+        <span class="card-tag">Autism &amp; IDD</span>
+        <div class="card-title">Autistic students are heading to college in record numbers</div>
+        <div class="card-excerpt">What does research say about what makes college successful for individuals on the spectrum — and how can families prepare?</div>
+      </div>
+      <div class="card-footer-row"><div class="author-chip"><div class="adot">CC</div><div class="aname">Callie Cooper, LSW</div></div><div class="cdate">Dec 2024</div></div>
+    </a>
+    <a href="06_post.html" class="blog-card">
+      <div class="card-img ci5">🤝</div>
+      <div class="card-body">
+        <span class="card-tag">Caregivers</span>
+        <div class="card-title">Overcoming the fear of starting therapy</div>
+        <div class="card-excerpt">For many people, the hardest part of getting help is making that first call. We address the most common fears and how to move past them.</div>
+      </div>
+      <div class="card-footer-row"><div class="author-chip"><div class="adot">HD</div><div class="aname">Howard Dobrushin, LPC</div></div><div class="cdate">Nov 2024</div></div>
+    </a>
+  </div>
+</div>
+
+<div class="dl-section">
+  <div class="dl-title">Staff publications &amp; downloads</div>
+  <div class="dl-list">
+    <div class="dl-item">
+      <div class="dl-left"><div class="dl-icon">📄</div><div><div class="dl-name">5 things to do to feel better during spring allergy season</div><div class="dl-sub">PDF · Callie Cooper, LSW</div></div></div>
+      <a href="https://www.chartecenter.org/_files/ugd/177f1c_dd29cdfa62dc426fb1762cbce736062f.pdf" class="dl-btn" target="_blank">⬇ Download</a>
+    </div>
+    <div class="dl-item">
+      <div class="dl-left"><div class="dl-icon">📄</div><div><div class="dl-name">Spring cleaning with allergies &amp; asthma</div><div class="dl-sub">PDF · Callie Cooper, LSW</div></div></div>
+      <a href="https://www.chartecenter.org/_files/ugd/177f1c_e9fdadb87953443c8362ae9afac37b2f.pdf" class="dl-btn" target="_blank">⬇ Download</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <div class="foot-logo">CHARTE Center</div>
+    <div class="foot-tag">Quality therapeutic interventions with respect and dignity in Allegheny County, PA.</div>
+    <div class="foot-phone">📞 412.745.8700</div>
+  </div>
+  <div>
+    <div class="foot-col-title">Navigate</div>
+    <ul class="foot-links">
+      <li><a href="01_home.html">Home</a></li>
+      <li><a href="02_about.html">About us</a></li>
+      <li><a href="03_services.html">Services</a></li>
+      <li><a href="05_blog.html">Blog</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="foot-col-title">Reach us</div>
+    <ul class="foot-links">
+      <li><a href="04_contact.html">Contact us</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Facebook</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="foot-bottom">
+  <span>© 2026 CHARTE Center Inc.</span>
+  <span>5725 Forward Ave #100 · Pittsburgh, PA 15217</span>
+</div>
+
+<script>
+document.querySelectorAll('.fbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>
