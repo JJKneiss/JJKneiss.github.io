@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Round Timer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0a0a0a;
+      color: #e8e8e0;
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .rt-root {
+      width: 100%;
+      max-width: 600px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .rt-presets {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .rt-preset-btn {
+      background: transparent;
+      border: 0.5px solid #333;
+      color: #888;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.15s;
+    }
+    .rt-preset-btn:hover { border-color: #666; color: #ccc; }
+    .rt-preset-btn.active { border-color: #c8f04a; color: #c8f04a; background: rgba(200,240,74,0.06); }
+
+    .rt-sound-toggle {
+      margin-left: auto;
+      background: transparent;
+      border: 0.5px solid #333;
+      color: #555;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rt-sound-toggle:hover { border-color: #555; color: #999; }
+    .rt-sound-toggle.on { border-color: #555; color: #888; }
+
+    .rt-clock-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.5rem 0;
+    }
+
+    .rt-phase-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #555;
+      height: 16px;
+    }
+    .rt-phase-label.work { color: #c8f04a; }
+    .rt-phase-label.rest { color: #4ab4f0; }
+
+    .rt-time {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(80px, 20vw, 120px);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      color: #f0f0e8;
+      transition: color 0.3s;
+    }
+    .rt-time.work { color: #c8f04a; }
+    .rt-time.rest { color: #4ab4f0; }
+    .rt-time.warning { color: #f04a4a; }
+
+    .rt-round-info {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: #444;
+      text-transform: uppercase;
+    }
+    .rt-round-info span { color: #888; }
+
+    .rt-progress-bar {
+      width: 100%;
+      max-width: 400px;
+      height: 2px;
+      background: #1a1a1a;
+      border-radius: 1px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .rt-progress-fill {
+      height: 100%;
+      background: #c8f04a;
+      border-radius: 1px;
+      transition: width 0.5s linear, background 0.3s;
+    }
+    .rt-progress-fill.rest { background: #4ab4f0; }
+
+    .rt-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .rt-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 0.5px solid #333;
+      background: transparent;
+      color: #888;
+      padding: 10px 28px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .rt-btn:hover { border-color: #666; color: #ccc; }
+    .rt-btn.primary {
+      border-color: #c8f04a;
+      color: #c8f04a;
+      background: rgba(200,240,74,0.08);
+      font-size: 13px;
+      padding: 12px 40px;
+    }
+    .rt-btn.primary:hover { background: rgba(200,240,74,0.15); }
+
+    .rt-settings {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .rt-setting {
+      background: #111;
+      border: 0.5px solid #222;
+      border-radius: 4px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rt-setting label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #444;
+    }
+
+    .rt-setting-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rt-adj-btn {
+      width: 28px;
+      height: 28px;
+      border: 0.5px solid #2a2a2a;
+      background: #181818;
+      color: #666;
+      font-size: 16px;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.1s;
+      font-family: monospace;
+      line-height: 1;
+    }
+    .rt-adj-btn:hover { border-color: #444; color: #bbb; }
+    .rt-adj-btn:active { transform: scale(0.94); }
+
+    .rt-val {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.05em;
+      color: #e0e0d8;
+    }
+
+    .rt-rounds-dots {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0.25rem 0;
+    }
+
+    .rt-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #222;
+      border: 0.5px solid #333;
+      transition: all 0.3s;
+    }
+    .rt-dot.done { background: #3a4a1a; border-color: #5a7a2a; }
+    .rt-dot.current { background: #c8f04a; border-color: #c8f04a; }
+
+    .rt-divider { border: none; border-top: 0.5px solid #1a1a1a; }
+  </style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:12px;left:16px;z-index:999;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#444440;text-decoration:none;border:0.5px solid #2a2a2a;border-radius:2px;padding:4px 10px;background:#0a0a0a;transition:color 0.15s,border-color 0.15s;" onmouseover="this.style.color='#e8e8e0';this.style.borderColor='#888880'" onmouseout="this.style.color='#444440';this.style.borderColor='#2a2a2a'">← Home</a>
+  <div class="rt-root" id="app">
+    <div class="rt-presets" id="presets">
+      <button class="rt-sound-toggle on" id="soundToggle" onclick="toggleSound()">
+        <i class="ti ti-volume" aria-hidden="true"></i> Sound on
+      </button>
+    </div>
+
+    <hr class="rt-divider">
+
+    <div class="rt-clock-area">
+      <div class="rt-phase-label" id="phaseLabel">Ready</div>
+      <div class="rt-time" id="timeDisplay">5:00</div>
+      <div class="rt-round-info">Round <span id="currentRound">1</span> of <span id="totalRounds">5</span></div>
+      <div class="rt-progress-bar"><div class="rt-progress-fill" id="progressFill" style="width:100%"></div></div>
+    </div>
+
+    <div class="rt-rounds-dots" id="roundDots"></div>
+
+    <div class="rt-controls">
+      <button class="rt-btn" onclick="resetTimer()">Reset</button>
+      <button class="rt-btn primary" id="startBtn" onclick="toggleTimer()">Start</button>
+    </div>
+
+    <hr class="rt-divider">
+
+    <div class="rt-settings">
+      <div class="rt-setting">
+        <label>Work (min)</label>
+        <div class="rt-setting-row">
+          <button class="rt-adj-btn" onclick="adjust('workMin',-1)">−</button>
+          <div class="rt-val" id="workMinVal">5</div>
+          <button class="rt-adj-btn" onclick="adjust('workMin',1)">+</button>
+        </div>
+      </div>
+      <div class="rt-setting">
+        <label>Work (sec)</label>
+        <div class="rt-setting-row">
+          <button class="rt-adj-btn" onclick="adjust('workSec',-15)">−</button>
+          <div class="rt-val" id="workSecVal">00</div>
+          <button class="rt-adj-btn" onclick="adjust('workSec',15)">+</button>
+        </div>
+      </div>
+      <div class="rt-setting">
+        <label>Rest (min)</label>
+        <div class="rt-setting-row">
+          <button class="rt-adj-btn" onclick="adjust('restMin',-1)">−</button>
+          <div class="rt-val" id="restMinVal">1</div>
+          <button class="rt-adj-btn" onclick="adjust('restMin',1)">+</button>
+        </div>
+      </div>
+      <div class="rt-setting">
+        <label>Rest (sec)</label>
+        <div class="rt-setting-row">
+          <button class="rt-adj-btn" onclick="adjust('restSec',-15)">−</button>
+          <div class="rt-val" id="restSecVal">00</div>
+          <button class="rt-adj-btn" onclick="adjust('restSec',15)">+</button>
+        </div>
+      </div>
+      <div class="rt-setting" style="grid-column: 1 / -1;">
+        <label>Rounds</label>
+        <div class="rt-setting-row">
+          <button class="rt-adj-btn" onclick="adjust('rounds',-1)">−</button>
+          <div class="rt-val" id="roundsVal">5</div>
+          <button class="rt-adj-btn" onclick="adjust('rounds',1)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PRESETS = [
+      { name: 'BJJ', workMin: 5, workSec: 0, restMin: 1, restSec: 0, rounds: 5 },
+      { name: 'Boxing', workMin: 3, workSec: 0, restMin: 1, restSec: 0, rounds: 12 },
+      { name: 'Muay Thai', workMin: 3, workSec: 0, restMin: 2, restSec: 0, rounds: 5 },
+      { name: 'Circuit', workMin: 0, workSec: 45, restMin: 0, restSec: 15, rounds: 8 },
+    ];
+
+    let cfg = { workMin: 5, workSec: 0, restMin: 1, restSec: 0, rounds: 5 };
+    let state = { running: false, phase: 'idle', currentRound: 1, remaining: 0, total: 0, interval: null };
+    let activePreset = 0;
+    let soundOn = true;
+    let audioCtx = null;
+
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      return audioCtx;
+    }
+
+    function beep(type) {
+      if (!soundOn) return;
+      try {
+        const ctx = getAudioCtx();
+        if (ctx.state === 'suspended') ctx.resume();
+
+        const configs = {
+          workStart: [{ freq: 880, dur: 0.12, t: 0 }, { freq: 1100, dur: 0.18, t: 0.14 }],
+          restStart: [{ freq: 660, dur: 0.2, t: 0 }, { freq: 440, dur: 0.3, t: 0.22 }],
+          warning:   [{ freq: 660, dur: 0.08, t: 0 }, { freq: 660, dur: 0.08, t: 0.1 }, { freq: 660, dur: 0.08, t: 0.2 }],
+          done:      [{ freq: 880, dur: 0.15, t: 0 }, { freq: 880, dur: 0.15, t: 0.18 }, { freq: 1320, dur: 0.4, t: 0.36 }],
+        };
+
+        const tones = configs[type] || configs.workStart;
+        const now = ctx.currentTime;
+
+        tones.forEach(({ freq, dur, t }) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + t);
+          gain.gain.setValueAtTime(0, now + t);
+          gain.gain.linearRampToValueAtTime(0.35, now + t + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + t + dur);
+          osc.start(now + t);
+          osc.stop(now + t + dur + 0.05);
+        });
+      } catch(e) {}
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      const btn = document.getElementById('soundToggle');
+      btn.className = 'rt-sound-toggle' + (soundOn ? ' on' : '');
+      btn.innerHTML = soundOn
+        ? '<i class="ti ti-volume" aria-hidden="true"></i> Sound on'
+        : '<i class="ti ti-volume-off" aria-hidden="true"></i> Sound off';
+    }
+
+    function workTotal() { return cfg.workMin * 60 + cfg.workSec; }
+    function restTotal() { return cfg.restMin * 60 + cfg.restSec; }
+
+    function fmt(s) {
+      const m = Math.floor(s / 60);
+      const sec = s % 60;
+      return m + ':' + String(sec).padStart(2,'0');
+    }
+
+    function renderPresets() {
+      const el = document.getElementById('presets');
+      const toggle = document.getElementById('soundToggle');
+      el.innerHTML = PRESETS.map((p,i) =>
+        `<button class="rt-preset-btn ${i===activePreset?'active':''}" onclick="loadPreset(${i})">${p.name}</button>`
+      ).join('');
+      el.appendChild(toggle);
+    }
+
+    function loadPreset(i) {
+      activePreset = i;
+      cfg = { ...PRESETS[i] };
+      resetTimer();
+      renderPresets();
+      syncSettings();
+    }
+
+    function syncSettings() {
+      document.getElementById('workMinVal').textContent = cfg.workMin;
+      document.getElementById('workSecVal').textContent = String(cfg.workSec).padStart(2,'0');
+      document.getElementById('restMinVal').textContent = cfg.restMin;
+      document.getElementById('restSecVal').textContent = String(cfg.restSec).padStart(2,'0');
+      document.getElementById('roundsVal').textContent = cfg.rounds;
+      document.getElementById('totalRounds').textContent = cfg.rounds;
+      renderDots();
+    }
+
+    function adjust(field, delta) {
+      if (state.running) return;
+      if (field === 'workMin') cfg.workMin = Math.max(0, cfg.workMin + delta);
+      if (field === 'workSec') cfg.workSec = Math.min(45, Math.max(0, cfg.workSec + delta));
+      if (field === 'restMin') cfg.restMin = Math.max(0, cfg.restMin + delta);
+      if (field === 'restSec') cfg.restSec = Math.min(45, Math.max(0, cfg.restSec + delta));
+      if (field === 'rounds') cfg.rounds = Math.max(1, Math.min(20, cfg.rounds + delta));
+      activePreset = -1;
+      renderPresets();
+      syncSettings();
+      resetTimer();
+    }
+
+    function renderDots() {
+      const el = document.getElementById('roundDots');
+      el.innerHTML = Array.from({length: cfg.rounds}, (_,i) => {
+        let cls = 'rt-dot';
+        if (i + 1 < state.currentRound) cls += ' done';
+        else if (i + 1 === state.currentRound && state.phase !== 'idle') cls += ' current';
+        return `<div class="${cls}"></div>`;
+      }).join('');
+    }
+
+    function setDisplay(remaining, total, phase) {
+      const td = document.getElementById('timeDisplay');
+      const pl = document.getElementById('phaseLabel');
+      const pf = document.getElementById('progressFill');
+
+      td.textContent = fmt(remaining);
+      const pct = total > 0 ? Math.round((remaining / total) * 100) : 100;
+      pf.style.width = pct + '%';
+
+      td.className = 'rt-time';
+      pl.className = 'rt-phase-label';
+      pf.className = 'rt-progress-fill';
+
+      if (phase === 'work') {
+        pl.textContent = 'Work';
+        pl.classList.add('work');
+        if (remaining <= 10) { td.classList.add('warning'); pf.style.background = '#f04a4a'; }
+        else { td.classList.add('work'); pf.style.background = ''; }
+      } else if (phase === 'rest') {
+        pl.textContent = 'Rest';
+        pl.classList.add('rest');
+        td.classList.add('rest');
+        pf.classList.add('rest');
+        pf.style.background = '';
+      } else {
+        pl.textContent = 'Ready';
+        pf.style.background = '';
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(state.interval);
+      state = { running: false, phase: 'idle', currentRound: 1, remaining: workTotal(), total: workTotal(), interval: null };
+      document.getElementById('currentRound').textContent = 1;
+      document.getElementById('startBtn').textContent = 'Start';
+      setDisplay(workTotal(), workTotal(), 'idle');
+      renderDots();
+    }
+
+    function toggleTimer() {
+      if (state.phase === 'done') { resetTimer(); return; }
+      if (state.running) {
+        clearInterval(state.interval);
+        state.running = false;
+        document.getElementById('startBtn').textContent = 'Resume';
+      } else {
+        if (state.phase === 'idle') {
+          state.phase = 'work';
+          state.remaining = workTotal();
+          state.total = workTotal();
+          beep('workStart');
+          renderDots();
+        }
+        state.running = true;
+        document.getElementById('startBtn').textContent = 'Pause';
+        state.interval = setInterval(tick, 1000);
+      }
+    }
+
+    let warnedThisPhase = false;
+
+    function tick() {
+      state.remaining--;
+      setDisplay(state.remaining, state.total, state.phase);
+
+      if (state.remaining === 10 && state.phase === 'work' && !warnedThisPhase) {
+        beep('warning');
+        warnedThisPhase = true;
+      }
+
+      if (state.remaining <= 0) {
+        warnedThisPhase = false;
+        if (state.phase === 'work') {
+          if (state.currentRound >= cfg.rounds) {
+            clearInterval(state.interval);
+            state.running = false;
+            state.phase = 'done';
+            beep('done');
+            document.getElementById('phaseLabel').textContent = 'Done';
+            document.getElementById('phaseLabel').className = 'rt-phase-label work';
+            document.getElementById('timeDisplay').textContent = '0:00';
+            document.getElementById('startBtn').textContent = 'Restart';
+            renderDots();
+            return;
+          }
+          state.phase = 'rest';
+          state.remaining = restTotal();
+          state.total = restTotal();
+          beep('restStart');
+        } else {
+          state.currentRound++;
+          document.getElementById('currentRound').textContent = state.currentRound;
+          state.phase = 'work';
+          state.remaining = workTotal();
+          state.total = workTotal();
+          beep('workStart');
+          renderDots();
+        }
+      }
+    }
+
+    renderPresets();
+    syncSettings();
+    resetTimer();
+  </script>
+</body>
+</html>

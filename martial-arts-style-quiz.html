@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Martial Art Fits You?</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f3;
+      --text: #1a1a1a;
+      --text-secondary: #6b6b6b;
+      --text-tertiary: #a0a0a0;
+      --border: rgba(0,0,0,0.12);
+      --border-hover: rgba(0,0,0,0.25);
+      --border-strong: rgba(0,0,0,0.4);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;
+        --bg-secondary: #242424;
+        --text: #e8e8e0;
+        --text-secondary: #a0a09a;
+        --text-tertiary: #606060;
+        --border: rgba(255,255,255,0.12);
+        --border-hover: rgba(255,255,255,0.25);
+        --border-strong: rgba(255,255,255,0.4);
+      }
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; min-height: 100vh; }
+
+    .quiz-wrap { max-width: 620px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .q-progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 1.75rem; overflow: hidden; }
+    .q-progress-fill { height: 100%; background: var(--text); border-radius: 2px; transition: width 0.4s ease; }
+    .q-label { font-size: 13px; color: var(--text-tertiary); margin-bottom: 0.5rem; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+    .q-text { font-size: 21px; font-weight: 500; line-height: 1.35; color: var(--text); }
+    .q-options { display: flex; flex-direction: column; gap: 10px; margin-top: 1.75rem; }
+    .q-option {
+      padding: 14px 18px; border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); cursor: pointer;
+      font-size: 15px; color: var(--text); background: var(--bg);
+      text-align: left; transition: border-color 0.15s, background 0.15s;
+      font-family: 'DM Sans', sans-serif; line-height: 1.4;
+    }
+    .q-option:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
+    .q-option.selected { border-color: var(--border-strong); background: var(--bg-secondary); font-weight: 500; }
+    .q-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.75rem; }
+    .q-step { font-size: 13px; color: var(--text-tertiary); font-family: 'DM Mono', monospace; }
+    .q-btn { padding: 10px 20px; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--border); background: var(--bg); color: var(--text); transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+    .q-btn:hover { background: var(--bg-secondary); border-color: var(--border-hover); }
+    .q-btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .q-btn.primary:hover { opacity: 0.85; }
+    .q-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .r-wrap { max-width: 620px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .r-heading { font-size: 13px; color: var(--text-tertiary); font-family: 'DM Mono', monospace; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+    .r-title { font-size: 24px; font-weight: 500; margin-bottom: 2rem; color: var(--text); }
+    .r-card { border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 12px; background: var(--bg); }
+    .r-card.top { border-color: var(--border-strong); }
+    .r-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .r-style-name { font-size: 16px; font-weight: 500; color: var(--text); }
+    .r-pct { font-size: 13px; color: var(--text-secondary); font-family: 'DM Mono', monospace; }
+    .r-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 12px; }
+    .r-bar { height: 100%; border-radius: 2px; }
+    .r-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .r-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .r-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 0.5px solid var(--border); color: var(--text-tertiary); font-family: 'DM Mono', monospace; letter-spacing: 0.03em; }
+    .r-top-badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; background: var(--bg-secondary); color: var(--text-secondary); font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+    .r-footer { margin-top: 2rem; display: flex; gap: 10px; }
+  </style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:12px;left:16px;z-index:999;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#444440;text-decoration:none;border:0.5px solid #2a2a2a;border-radius:2px;padding:4px 10px;background:#0a0a0a;transition:color 0.15s,border-color 0.15s;" onmouseover="this.style.color='#e8e8e0';this.style.borderColor='#888880'" onmouseout="this.style.color='#444440';this.style.borderColor='#2a2a2a'">← Home</a>
+
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress-bar"><div class="q-progress-fill" id="prog"></div></div>
+  <div class="q-label" id="q-label"></div>
+  <div class="q-text" id="q-text"></div>
+  <div class="q-options" id="q-options"></div>
+  <div class="q-nav">
+    <button class="q-btn" id="back-btn" onclick="goBack()">← Back</button>
+    <span class="q-step" id="q-step"></span>
+    <button class="q-btn primary" id="next-btn" onclick="goNext()">Next →</button>
+  </div>
+</div>
+
+<div id="results-screen" class="r-wrap" style="display:none"></div>
+
+<script>
+const STYLES = {
+  bjj:      { name:'Brazilian Jiu-Jitsu', tags:['ground game','submissions','leverage'], desc:'Built on technique over strength, BJJ rewards those who enjoy solving physical puzzles. Excellent for self-defense and sport competition. One of the most transferable arts for real-world situations.', bar:'#378ADD' },
+  muaythai: { name:'Muay Thai', tags:['striking','clinch','conditioning'], desc:'The art of eight limbs — fists, elbows, knees, and shins. Hard-hitting and physically demanding, Muay Thai builds real striking ability and elite cardio. Widely regarded as the most effective striking art.', bar:'#D85A30' },
+  wrestling: { name:'Wrestling', tags:['takedowns','control','athleticism'], desc:'The backbone of MMA. Wrestling builds explosive athleticism, dominant top control, and the ability to dictate where a fight takes place. Rewards intensity and relentless pressure.', bar:'#BA7517' },
+  judo:     { name:'Judo', tags:['throws','off-balancing','sport'], desc:'Uses your opponent\'s energy and momentum against them. Beautiful throws and efficient takedowns make it effective for self-defense and sport. Strong crossover with BJJ on the ground.', bar:'#639922' },
+  boxing:   { name:'Boxing', tags:['hands','footwork','defense'], desc:'Pure hand-striking mastery. Boxing develops elite head movement, distance management, and punch combinations. Simple to learn, incredibly deep to master — and directly applicable in any striking art.', bar:'#7F77DD' },
+  karate:   { name:'Karate / Tang Soo Do', tags:['striking','tradition','discipline'], desc:'A traditional striking art emphasizing precision, kata, and self-development. Multiple styles exist — from point fighting to full-contact knockdown. The structure and belt system suit those who value clear progression.', bar:'#D4537E' },
+  kravmaga: { name:'Krav Maga', tags:['self-defense','reality-based','practical'], desc:'Developed for real-world threats with no rules and no sport. Fast, aggressive responses to danger. Best for those focused purely on self-defense rather than competition or tradition.', bar:'#888780' },
+  mma:      { name:'MMA', tags:['all ranges','hybrid','competition'], desc:'Training across striking, wrestling, and ground simultaneously. Ideal for those who want well-rounded skills and love variety. The most demanding and complete path — and the most honest test of what works.', bar:'#1D9E75' },
+};
+
+const QUESTIONS = [
+  {
+    text: 'What\'s your primary reason for training martial arts?',
+    options: [
+      { text: 'Self-defense and personal safety', scores: { kravmaga:3, bjj:2, muaythai:1 } },
+      { text: 'Sport competition and testing myself', scores: { bjj:3, muaythai:2, wrestling:2, boxing:1 } },
+      { text: 'Fitness, conditioning, and health', scores: { muaythai:3, boxing:2, wrestling:2 } },
+      { text: 'Discipline, tradition, and personal growth', scores: { karate:3, judo:2, bjj:1 } },
+      { text: 'All of the above — I want everything', scores: { mma:4, bjj:1, muaythai:1 } },
+    ]
+  },
+  {
+    text: 'How would you describe your natural physical attributes?',
+    options: [
+      { text: 'Strong and powerful — I rely on physicality', scores: { wrestling:3, muaythai:2 } },
+      { text: 'Lean and technical — I prefer leverage over strength', scores: { bjj:3, judo:2 } },
+      { text: 'Quick and explosive — speed is my edge', scores: { boxing:3, muaythai:2, karate:1 } },
+      { text: 'Flexible and athletic — good range of motion', scores: { bjj:2, muaythai:2, wrestling:1 } },
+      { text: 'Average build — technique matters more than attributes', scores: { bjj:2, karate:2, judo:2 } },
+    ]
+  },
+  {
+    text: 'Where do you feel most comfortable in a fight?',
+    options: [
+      { text: 'Standing and striking at range', scores: { boxing:3, muaythai:2, karate:2 } },
+      { text: 'In the clinch, close range', scores: { muaythai:3, wrestling:2, judo:2 } },
+      { text: 'Taking the fight to the ground', scores: { bjj:3, wrestling:2 } },
+      { text: 'Controlling my opponent from any position', scores: { wrestling:3, judo:2, bjj:1 } },
+      { text: 'Wherever the fight goes — I want to adapt', scores: { mma:4, kravmaga:2 } },
+    ]
+  },
+  {
+    text: 'How do you approach learning and problem-solving?',
+    options: [
+      { text: 'I love puzzles — I enjoy thinking deeply and building systems', scores: { bjj:3, judo:2 } },
+      { text: 'I\'m a grinder — hard work and repetition are my approach', scores: { wrestling:3, muaythai:2, boxing:2 } },
+      { text: 'I\'m creative — I like improvising and experimenting', scores: { mma:3, bjj:2, boxing:1 } },
+      { text: 'I like structure, tradition, and clear steps forward', scores: { karate:3, judo:2 } },
+      { text: 'I\'m practical — I want what works fastest in real life', scores: { kravmaga:3, wrestling:1, muaythai:1 } },
+    ]
+  },
+  {
+    text: 'How important is sport competition to you?',
+    options: [
+      { text: 'Very — I want to compete regularly', scores: { bjj:3, muaythai:2, wrestling:3, boxing:2 } },
+      { text: 'Somewhat — I might compete occasionally', scores: { judo:2, karate:2, bjj:1 } },
+      { text: 'Not at all — I train for self-defense only', scores: { kravmaga:3 } },
+      { text: 'I\'m not sure yet — I just want to get good first', scores: { mma:2, bjj:1, muaythai:1 } },
+    ]
+  },
+  {
+    text: 'How hard do you want to train physically?',
+    options: [
+      { text: 'As hard as possible — I want to be elite', scores: { wrestling:3, muaythai:3, mma:3 } },
+      { text: 'Hard but sustainable — longevity matters to me', scores: { bjj:3, judo:2, karate:1 } },
+      { text: 'Moderate — I have a busy life outside training', scores: { boxing:2, karate:2, kravmaga:2 } },
+      { text: 'Light to moderate — I\'m managing injury or physical limits', scores: { bjj:3, judo:2 } },
+    ]
+  },
+  {
+    text: 'What kind of sparring appeals to you most?',
+    options: [
+      { text: 'Live rolling on the ground — grappling', scores: { bjj:3, wrestling:2, judo:1 } },
+      { text: 'Stand-up sparring — striking', scores: { boxing:3, muaythai:3, karate:2 } },
+      { text: 'Throws and takedown sparring', scores: { judo:3, wrestling:2 } },
+      { text: 'All of the above — full contact everything', scores: { mma:4, muaythai:1 } },
+      { text: 'Controlled drilling — I\'m not big on full sparring', scores: { karate:2, kravmaga:2, bjj:1 } },
+    ]
+  },
+  {
+    text: 'How do you feel about tradition and ceremony in martial arts?',
+    options: [
+      { text: 'I love it — bowing, belts, and lineage matter to me', scores: { karate:3, judo:3, bjj:1 } },
+      { text: 'I appreciate it but it\'s not the main draw', scores: { bjj:2, judo:1, karate:1 } },
+      { text: 'I don\'t care either way — I\'m here to train', scores: { wrestling:2, muaythai:2, boxing:2 } },
+      { text: 'I prefer no tradition — just practical results', scores: { kravmaga:3, mma:2 } },
+    ]
+  },
+  {
+    text: 'What real-world scenario concerns you most?',
+    options: [
+      { text: 'Being taken to the ground', scores: { bjj:3, wrestling:2, kravmaga:1 } },
+      { text: 'Being struck standing up', scores: { boxing:3, muaythai:2, karate:1 } },
+      { text: 'A weapon or multiple attackers', scores: { kravmaga:4 } },
+      { text: 'Being grabbed or clinched', scores: { judo:3, muaythai:2, wrestling:1 } },
+      { text: 'I train for sport — real-world self-defense isn\'t the focus', scores: { bjj:1, muaythai:1, wrestling:1, boxing:1 } },
+    ]
+  },
+  {
+    text: 'Which training environment appeals to you most?',
+    options: [
+      { text: 'A competitive gym with a strong tournament team', scores: { bjj:2, muaythai:2, wrestling:3, boxing:2 } },
+      { text: 'A small technical academy with deep one-on-one instruction', scores: { bjj:3, karate:2, judo:2 } },
+      { text: 'A hardcore fight gym — raw, no-nonsense', scores: { muaythai:3, boxing:2, mma:2 } },
+      { text: 'A mixed facility where I can cross-train freely', scores: { mma:4, bjj:1, wrestling:1 } },
+      { text: 'A practical self-defense center', scores: { kravmaga:3, karate:1 } },
+    ]
+  },
+];
+
+let current = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+
+function render() {
+  const q = QUESTIONS[current];
+  const total = QUESTIONS.length;
+  document.getElementById('prog').style.width = ((current + 1) / total * 100) + '%';
+  document.getElementById('q-label').textContent = 'Question ' + (current + 1) + ' of ' + total;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-step').textContent = (current + 1) + ' / ' + total;
+  document.getElementById('q-options').innerHTML = q.options.map((o, i) =>
+    `<button class="q-option${answers[current] === i ? ' selected' : ''}" onclick="selectAnswer(${i})">${o.text}</button>`
+  ).join('');
+  document.getElementById('back-btn').disabled = current === 0;
+  document.getElementById('next-btn').disabled = answers[current] === null;
+  document.getElementById('next-btn').textContent = current === total - 1 ? 'See results →' : 'Next →';
+}
+
+function selectAnswer(i) {
+  answers[current] = i;
+  document.querySelectorAll('.q-option').forEach((el, idx) => el.classList.toggle('selected', idx === i));
+  document.getElementById('next-btn').disabled = false;
+}
+
+function goNext() {
+  if(answers[current] === null) return;
+  if(current === QUESTIONS.length - 1) { showResults(); return; }
+  current++; render();
+}
+
+function goBack() {
+  if(current === 0) return;
+  current--; render();
+}
+
+function showResults() {
+  const scores = {};
+  Object.keys(STYLES).forEach(k => scores[k] = 0);
+  answers.forEach((ansIdx, qIdx) => {
+    if(ansIdx === null) return;
+    Object.entries(QUESTIONS[qIdx].options[ansIdx].scores).forEach(([k, v]) => { if(scores[k] !== undefined) scores[k] += v; });
+  });
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const max = sorted[0][1];
+
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('results-screen');
+  rs.style.display = 'block';
+  rs.innerHTML = `
+    <div class="r-heading">Your results</div>
+    <div class="r-title">Here's how each style fits your answers.</div>
+    ${sorted.map(([key, score], i) => {
+      const s = STYLES[key];
+      const pct = max > 0 ? Math.round(score / max * 100) : 0;
+      return `<div class="r-card${i === 0 ? ' top' : ''}">
+        ${i === 0 ? '<span class="r-top-badge">Best match</span>' : ''}
+        <div class="r-card-top">
+          <span class="r-style-name">${s.name}</span>
+          <span class="r-pct">${pct}%</span>
+        </div>
+        <div class="r-bar-wrap"><div class="r-bar" style="width:${pct}%;background:${s.bar}"></div></div>
+        <div class="r-desc">${s.desc}</div>
+        <div class="r-tags">${s.tags.map(t => `<span class="r-tag">${t}</span>`).join('')}</div>
+      </div>`;
+    }).join('')}
+    <div class="r-footer">
+      <button class="q-btn" onclick="restart()">← Retake quiz</button>
+    </div>
+  `;
+}
+
+function restart() {
+  current = 0;
+  answers = new Array(QUESTIONS.length).fill(null);
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

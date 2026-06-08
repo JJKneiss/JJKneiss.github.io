@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jamie — Web Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111;
+      --surface-2: #161616;
+      --border: #1e1e1e;
+      --border-2: #2a2a2a;
+      --ink: #e8e8e0;
+      --ink-2: #888880;
+      --ink-3: #444440;
+      --accent: #c8f04a;
+      --accent-dim: rgba(200,240,74,0.07);
+      --accent-border: rgba(200,240,74,0.2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; border-bottom: 0.5px solid var(--border);
+      background: rgba(10,10,10,0.92); backdrop-filter: blur(8px);
+    }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.08em; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero { padding: 6rem 2rem 5rem; max-width: 860px; margin: 0 auto; }
+    .hero-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); font-family: 'DM Mono', monospace; margin-bottom: 1.25rem; }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 10vw, 6rem); letter-spacing: 0.02em; line-height: 0.95; color: var(--ink); margin-bottom: 1.5rem; }
+    .hero-title em { color: var(--accent); font-style: normal; }
+    .hero-desc { font-size: 1.05rem; color: var(--ink-2); max-width: 520px; line-height: 1.7; margin-bottom: 2rem; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary { display: inline-block; background: var(--accent); color: #0a0a0a; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem 1.4rem; border-radius: 2px; text-decoration: none; font-weight: 500; transition: opacity 0.15s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost { display: inline-block; border: 0.5px solid var(--border-2); color: var(--ink-2); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem 1.4rem; border-radius: 2px; text-decoration: none; transition: all 0.15s; }
+    .btn-ghost:hover { border-color: var(--ink-3); color: var(--ink); }
+
+    /* ── SECTION HEADER ── */
+    .section { padding: 5rem 2rem; max-width: 860px; margin: 0 auto; }
+    .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); font-family: 'DM Mono', monospace; margin-bottom: 0.6rem; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.5rem; }
+    .section-desc { font-size: 0.95rem; color: var(--ink-2); max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
+    .divider { border: none; border-top: 0.5px solid var(--border); }
+
+    /* ── WORK GRID ── */
+    .work-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 4px; overflow: hidden; }
+    .work-card { background: var(--surface); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; text-decoration: none; transition: background 0.15s; }
+    .work-card:hover { background: var(--surface-2); }
+    .work-card:hover .work-arrow { transform: translateX(4px); }
+    .work-card-tag { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-3); }
+    .work-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 0.05em; color: var(--ink); line-height: 1.2; }
+    .work-card-desc { font-size: 12px; color: var(--ink-2); line-height: 1.6; flex: 1; }
+    .work-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.25rem; }
+    .work-card-tech { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tech-pill { font-size: 9px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-3); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 2px 7px; }
+    .work-arrow { font-size: 12px; color: var(--accent); transition: transform 0.15s; }
+
+    /* ── BIO ── */
+    .bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 600px) { .bio-grid { grid-template-columns: 1fr; } }
+    .bio-block { display: flex; flex-direction: column; gap: 0.5rem; }
+    .bio-block-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-3); }
+    .bio-block-text { font-size: 0.9rem; color: var(--ink-2); line-height: 1.7; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-tag { font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; color: var(--ink-2); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 3px 9px; }
+
+    /* ── CONTACT ── */
+    .contact-card { background: var(--surface); border: 0.5px solid var(--border-2); border-radius: 4px; padding: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; color: var(--ink); }
+    .contact-desc { font-size: 0.95rem; color: var(--ink-2); max-width: 480px; line-height: 1.7; }
+    .contact-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .contact-link { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-2); text-decoration: none; border: 0.5px solid var(--border-2); border-radius: 2px; padding: 0.55rem 1rem; transition: all 0.15s; }
+    .contact-link:hover { color: var(--ink); border-color: var(--ink-3); }
+    .contact-link.accent { color: var(--accent); border-color: var(--accent-border); background: var(--accent-dim); }
+    .contact-link.accent:hover { background: rgba(200,240,74,0.12); }
+
+    /* ── FOOTER ── */
+    footer { border-top: 0.5px solid var(--border); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .footer-name { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: var(--ink-3); }
+    .footer-note { font-size: 10px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-3); }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem; }
+      .nav-links { gap: 1rem; }
+      .hero { padding: 4rem 1.25rem 3rem; }
+      .section { padding: 3.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Jamie</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Web Developer — Pittsburgh, PA</div>
+  <h1 class="hero-title">Building tools<br>that <em>actually</em><br>get used.</h1>
+  <p class="hero-desc">I build clean, functional web tools — standalone apps, client sites, and interactive experiences. Background in HTML, CSS, JavaScript, PHP, and WordPress. Currently training toward a career in martial arts instruction while taking on freelance work.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="#work">See the work</a>
+    <a class="btn-ghost" href="#contact">Get in touch</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WORK -->
+<section class="section" id="work">
+  <div class="section-label">Portfolio</div>
+  <h2 class="section-title">Selected Work</h2>
+  <p class="section-desc">Six standalone tools built as portfolio pieces — each solving a real problem, each a single HTML file with no dependencies.</p>
+
+  <div class="work-grid">
+
+    <a class="work-card" href="round-timer.html">
+      <div class="work-card-tag">Utility · UI</div>
+      <div class="work-card-title">Round Timer Customizer</div>
+      <div class="work-card-desc">Configurable interval timer with presets for BJJ, Boxing, Muay Thai, and Circuit Training. Audio cues, round progress dots, and pause/resume. Works offline.</div>
+      <div class="work-card-footer">
+        <div class="work-card-tech">
+          <span class="tech-pill">Web Audio API</span>
+          <span class="tech-pill">Vanilla JS</span>
+        </div>
+        <span class="work-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="tournament-bracket.html">
+      <div class="work-card-tag">Tool · Logic</div>
+      <div class="work-card-title">Tournament Bracket Generator</div>
+      <div class="work-card-desc">Single and double elimination brackets for any player count. Click to advance winners, automatic bye handling, grand final with bracket reset. Rendered in SVG.</div>
+      <div class="work-card-footer">
+        <div class="work-card-tech">
+          <span class="tech-pill">SVG</span>
+          <span class="tech-pill">Bracket Logic</span>
+        </div>
+        <span class="work-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="tech-audit.html">
+      <div class="work-card-tag">API · Business</div>
+      <div class="work-card-title">Site Audit Tool</div>
+      <div class="work-card-desc">Enter any URL and get a real performance, SEO, and mobile readiness report powered by Google PageSpeed Insights. Score out of 100 with 20+ audit line items.</div>
+      <div class="work-card-footer">
+        <div class="work-card-tech">
+          <span class="tech-pill">PageSpeed API</span>
+          <span class="tech-pill">Async JS</span>
+        </div>
+        <span class="work-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="sparring-film-room.html">
+      <div class="work-card-tag">Media · Coaching</div>
+      <div class="work-card-title">Sparring Film Room</div>
+      <div class="work-card-desc">Load any local video file and annotate it with timestamped notes. Pin markers on the timeline, click to jump, keyboard shortcuts, and export notes as a text file.</div>
+      <div class="work-card-footer">
+        <div class="work-card-tech">
+          <span class="tech-pill">File API</span>
+          <span class="tech-pill">Video API</span>
+        </div>
+        <span class="work-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="grappling-flowchart.html">
+      <div class="work-card-tag">Canvas · Interactive</div>
+      <div class="work-card-title">Grappling Flowchart Builder</div>
+      <div class="work-card-desc">Drag-and-drop node builder for mapping positional flows. Preset positions, custom nodes, click or drag to connect, labeled transitions, color coding, PNG and JSON export.</div>
+      <div class="work-card-footer">
+        <div class="work-card-tech">
+          <span class="tech-pill">SVG</span>
+          <span class="tech-pill">Drag & Drop</span>
+        </div>
+        <span class="work-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="martial-arts-style-quiz.html">
+      <div class="work-card-tag">UX · Shareable</div>
+      <div class="work-card-title">What Style Fits You?</div>
+      <div class="work-card-desc">A 10-question quiz assessing goals, body type, and training personality to recommend martial arts styles. Scores all 8 styles and ranks them with percentage match bars.</div>
+      <div class="work-card-footer">
+        <div class="work-card-tech">
+          <span class="tech-pill">Scoring Logic</span>
+          <span class="tech-pill">Vanilla JS</span>
+        </div>
+        <span class="work-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-label">About</div>
+  <h2 class="section-title">Background</h2>
+  <p class="section-desc">Developer, martial artist, and lifelong student. I build things that solve real problems and hold up under use.</p>
+
+  <div class="bio-grid">
+    <div class="bio-block">
+      <div class="bio-block-label">Background</div>
+      <div class="bio-block-text">Self-taught web developer with hands-on experience building and maintaining client sites. Background in WordPress, PHP, and DNS management. Currently expanding into modern JS frameworks and data-driven tools.</div>
+    </div>
+    <div class="bio-block">
+      <div class="bio-block-label">Beyond code</div>
+      <div class="bio-block-text">First-degree black belt in Soo Bahk Do, white belt in BJJ, and working toward a career in martial arts instruction. Building toward opening a gym and developing curriculum under my own system, Yu Kang Do.</div>
+    </div>
+    <div class="bio-block">
+      <div class="bio-block-label">Technical skills</div>
+      <div class="skill-list">
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">PHP</span>
+        <span class="skill-tag">WordPress</span>
+        <span class="skill-tag">DNS</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">SVG</span>
+        <span class="skill-tag">REST APIs</span>
+      </div>
+    </div>
+    <div class="bio-block">
+      <div class="bio-block-label">Currently exploring</div>
+      <div class="skill-list">
+        <span class="skill-tag">Next.js</span>
+        <span class="skill-tag">Svelte</span>
+        <span class="skill-tag">Data Analytics</span>
+        <span class="skill-tag">Sports Performance</span>
+        <span class="skill-tag">Physical Therapy Tech</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-label">Contact</div>
+  <div class="contact-card">
+    <h2 class="contact-title">Let's work together.</h2>
+    <p class="contact-desc">Open to freelance web development work — client sites, custom tools, WordPress builds, and consulting. Based in Pittsburgh, PA. Available remotely.</p>
+    <div class="contact-links">
+      <a class="contact-link accent" href="mailto:your@email.com">✉ Email me</a>
+      <a class="contact-link" href="https://github.com/" target="_blank">GitHub</a>
+      <a class="contact-link" href="https://www.instagram.com/middlewaymma" target="_blank">@middlewaymma</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Jamie</span>
+  <span class="footer-note">Built with HTML, CSS & JS — no frameworks, no build step.</span>
+</footer>
+
+</body>
+</html>

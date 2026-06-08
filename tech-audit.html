@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Audit — Web Health Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --surface: #ffffff;
+      --border: #e8e4dc;
+      --ink: #1a1814;
+      --ink-2: #6b6760;
+      --ink-3: #b0aca5;
+      --accent: #1a1814;
+      --good: #2d6a4f;
+      --good-bg: #f0f7f4;
+      --warn: #b45309;
+      --warn-bg: #fffbeb;
+      --bad: #991b1b;
+      --bad-bg: #fef2f2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      background: var(--surface);
+    }
+
+    header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    header span {
+      font-size: 0.75rem;
+      color: var(--ink-3);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      margin-bottom: 3rem;
+    }
+
+    .intro h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.25rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .intro h2 em {
+      font-style: italic;
+      color: var(--ink-2);
+    }
+
+    .intro p {
+      color: var(--ink-2);
+      font-size: 0.95rem;
+      max-width: 520px;
+    }
+
+    /* ── FORM ── */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-row:last-of-type { margin-bottom: 1.5rem; }
+
+    label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+
+    input[type="text"],
+    input[type="url"] {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.88rem;
+      background: var(--bg);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input[type="text"]:focus,
+    input[type="url"]:focus {
+      border-color: var(--ink);
+    }
+
+    input::placeholder { color: var(--ink-3); }
+
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      margin-top: 0.3rem;
+    }
+
+    .form-note a {
+      color: var(--ink-2);
+      text-underline-offset: 2px;
+    }
+
+    .btn-audit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 0.7rem 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-audit:hover { opacity: 0.85; }
+    .btn-audit:disabled { opacity: 0.4; cursor: default; }
+
+    /* ── LOADING ── */
+    #loading {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem;
+      color: var(--ink-2);
+      font-size: 0.88rem;
+    }
+
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--ink);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── ERROR ── */
+    #error-box {
+      display: none;
+      background: var(--bad-bg);
+      border: 1px solid #fca5a5;
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      color: var(--bad);
+      font-size: 0.88rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── RESULTS ── */
+    #results { display: none; }
+
+    .results-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .results-url {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--ink-3);
+      margin-bottom: 0.5rem;
+    }
+
+    .results-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── SCORE GRID ── */
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 600px) { .score-grid { grid-template-columns: 1fr; } }
+
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      margin-bottom: 0.75rem;
+    }
+
+    .score-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .score-value.good { color: var(--good); }
+    .score-value.warn { color: var(--warn); }
+    .score-value.bad  { color: var(--bad); }
+
+    .score-bar-wrap {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .score-bar {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.8s ease;
+    }
+
+    .score-bar.good { background: var(--good); }
+    .score-bar.warn { background: var(--warn); }
+    .score-bar.bad  { background: var(--bad); }
+
+    .score-desc {
+      font-size: 0.75rem;
+      color: var(--ink-3);
+      margin-top: 0.4rem;
+    }
+
+    /* ── OVERALL ── */
+    .overall-banner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .overall-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 4rem;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      flex-shrink: 0;
+    }
+
+    .overall-num.good { color: var(--good); }
+    .overall-num.warn { color: var(--warn); }
+    .overall-num.bad  { color: var(--bad); }
+
+    .overall-text h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .overall-text p {
+      font-size: 0.85rem;
+      color: var(--ink-2);
+    }
+
+    /* ── AUDIT ITEMS ── */
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+
+    .audit-table {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .audit-item {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      align-items: start;
+      gap: 0.75rem;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .audit-item:last-child { border-bottom: none; }
+
+    .audit-icon { font-size: 0.9rem; padding-top: 1px; }
+
+    .audit-name { font-weight: 500; }
+    .audit-desc { font-size: 0.8rem; color: var(--ink-2); margin-top: 0.15rem; }
+
+    .audit-badge {
+      font-size: 0.72rem;
+      font-weight: 500;
+      font-family: 'DM Mono', monospace;
+      padding: 0.2rem 0.55rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+      margin-top: 1px;
+    }
+
+    .audit-badge.good { background: var(--good-bg); color: var(--good); }
+    .audit-badge.warn { background: var(--warn-bg); color: var(--warn); }
+    .audit-badge.bad  { background: var(--bad-bg);  color: var(--bad); }
+
+    /* ── FOOTER ── */
+    .report-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn-new {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.5rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: var(--ink-2);
+      transition: all 0.15s;
+    }
+
+    .btn-new:hover { border-color: var(--ink); color: var(--ink); }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6760;text-decoration:none;border:0.5px solid #e8e4dc;border-radius:2px;padding:4px 10px;margin-right:0.5rem;transition:all 0.15s;white-space:nowrap;" onmouseover="this.style.color='#1a1814';this.style.borderColor='#b0aca5'" onmouseout="this.style.color='#6b6760';this.style.borderColor='#e8e4dc'">← Home</a>
+  <h1>Site Audit</h1>
+  <span>Web Health Report</span>
+</header>
+
+<main>
+  <div class="intro">
+    <h2>How healthy is<br><em>your website?</em></h2>
+    <p>Enter any URL and your Google PageSpeed API key to get an instant performance, SEO, and mobile readiness report.</p>
+  </div>
+
+  <div class="form-card">
+    <div class="form-row">
+      <label for="url-input">Website URL</label>
+      <input type="url" id="url-input" placeholder="https://example.com" />
+    </div>
+    <div class="form-row">
+      <label for="key-input">Google PageSpeed API Key</label>
+      <input type="text" id="key-input" placeholder="AIza..." />
+      <div class="form-note">
+        Required. Get a free key in 2 minutes:
+        <ol style="margin:.35rem 0 0 1.1rem;display:flex;flex-direction:column;gap:.2rem;">
+          <li>Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank">console.cloud.google.com/apis/credentials</a></li>
+          <li>Click <strong>+ Create Credentials → API key</strong></li>
+          <li>Search for and enable the <strong>PageSpeed Insights API</strong></li>
+          <li>Paste the key above — it stays in this tab only</li>
+        </ol>
+      </div>
+    </div>
+    <button class="btn-audit" id="audit-btn" onclick="runAudit()">
+      <span>Run Audit</span>
+      <span>→</span>
+    </button>
+  </div>
+
+  <div id="protocol-warning" style="display:none;background:#fffbeb;border:1px solid #fcd34d;border-radius:4px;padding:.9rem 1.25rem;color:#92400e;font-size:.85rem;margin-bottom:1.5rem;">
+    ⚠️ <strong>Opened as a local file.</strong> Browser security will block the API request. Serve this file with a local server instead:<br>
+    <code style="background:rgba(0,0,0,.06);padding:.15rem .4rem;border-radius:2px;font-size:.82rem;margin-top:.4rem;display:inline-block;">npx serve .</code> — then open the localhost URL shown in your terminal.
+  </div>
+
+  <div id="loading" style="display:none;align-items:center;gap:1rem;padding:2rem;color:#6b6760;font-size:.88rem;">
+    <div class="spinner"></div>
+    <span>Fetching report — this takes 10–20 seconds…</span>
+  </div>
+
+  <div id="error-box"></div>
+
+  <div id="results">
+    <div class="results-header">
+      <div class="results-url" id="res-url"></div>
+      <div class="results-title" id="res-title"></div>
+    </div>
+
+    <div class="overall-banner">
+      <div class="overall-num" id="overall-score"></div>
+      <div class="overall-text">
+        <h3 id="overall-label"></h3>
+        <p id="overall-desc"></p>
+      </div>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-card">
+        <div class="score-label">Performance</div>
+        <div class="score-value" id="perf-score"></div>
+        <div class="score-bar-wrap"><div class="score-bar" id="perf-bar"></div></div>
+        <div class="score-desc" id="perf-desc"></div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">SEO</div>
+        <div class="score-value" id="seo-score"></div>
+        <div class="score-bar-wrap"><div class="score-bar" id="seo-bar"></div></div>
+        <div class="score-desc" id="seo-desc"></div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Mobile Friendly</div>
+        <div class="score-value" id="mobile-score"></div>
+        <div class="score-bar-wrap"><div class="score-bar" id="mobile-bar"></div></div>
+        <div class="score-desc" id="mobile-desc"></div>
+      </div>
+    </div>
+
+    <div class="section-title">Audit Details</div>
+    <div class="audit-table" id="audit-items"></div>
+
+    <div class="report-footer">
+      <span id="res-timestamp"></span>
+      <button class="btn-new" onclick="newAudit()">← Run another audit</button>
+    </div>
+  </div>
+</main>
+
+<script>
+function scoreClass(n) {
+  if(n >= 90) return 'good';
+  if(n >= 50) return 'warn';
+  return 'bad';
+}
+
+function scoreLabel(n) {
+  if(n >= 90) return 'Good';
+  if(n >= 50) return 'Needs Work';
+  return 'Poor';
+}
+
+function overallVerdict(avg) {
+  if(avg >= 90) return ['Excellent', 'This site is well-optimized across performance, SEO, and mobile. Minor improvements may still be available.'];
+  if(avg >= 75) return ['Good', 'This site performs well overall, with a few areas worth improving for better user experience and search visibility.'];
+  if(avg >= 50) return ['Fair', 'There are meaningful opportunities to improve this site\'s speed, discoverability, and mobile experience.'];
+  return ['Needs Attention', 'This site has significant issues affecting user experience, search rankings, and mobile usability.'];
+}
+
+function setScore(id, barId, descId, score, label) {
+  const cls = scoreClass(score);
+  const el = document.getElementById(id);
+  el.textContent = score;
+  el.className = 'score-value ' + cls;
+  const bar = document.getElementById(barId);
+  bar.style.width = score + '%';
+  bar.className = 'score-bar ' + cls;
+  document.getElementById(descId).textContent = label;
+}
+
+async function runAudit() {
+  const url = document.getElementById('url-input').value.trim();
+  const key = document.getElementById('key-input').value.trim();
+
+  if(!url || !key) {
+    showError('Please enter both a URL and your API key.');
+    return;
+  }
+
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(url.startsWith('http') ? url : 'https://' + url);
+  } catch(e) {
+    showError('Please enter a valid URL (e.g. https://example.com).');
+    return;
+  }
+
+  document.getElementById('error-box').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('audit-btn').disabled = true;
+
+  try {
+    // Build endpoint
+    const base = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
+    function buildUrl(strategy) {
+      const u = new URL(base);
+      u.searchParams.set('url', parsedUrl.href);
+      u.searchParams.set('strategy', strategy);
+      u.searchParams.set('key', key);
+      return u.toString();
+    }
+
+    // Fetch both mobile and desktop strategies in parallel
+    const [mobileRes, desktopRes] = await Promise.all([
+      fetch(buildUrl('mobile')),
+      fetch(buildUrl('desktop'))
+    ]);
+
+    if(!mobileRes.ok || !desktopRes.ok) {
+      const errData = await (mobileRes.ok ? desktopRes : mobileRes).json();
+      const msg = errData?.error?.message || 'API request failed. Check your API key and URL.';
+      throw new Error(msg);
+    }
+
+    const [mobile, desktop] = await Promise.all([mobileRes.json(), desktopRes.json()]);
+
+    renderResults(parsedUrl.href, mobile, desktop);
+
+  } catch(e) {
+    if(e.message && e.message.toLowerCase().includes('fetch')) {
+      showError('Failed to fetch. If you opened this file directly (file://), try serving it with a local server instead — e.g. run "npx serve ." in the same folder and open the localhost URL. If you\'re on a server already, check that your API key is valid.');
+    } else {
+      showError(e.message || 'Something went wrong. Please try again.');
+    }
+  } finally {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('audit-btn').disabled = false;
+  }
+}
+
+function renderResults(url, mobile, desktop) {
+  // Scores (0–1 from API, multiply by 100)
+  const perfScore  = Math.round((mobile.lighthouseResult?.categories?.performance?.score ?? 0) * 100);
+  const seoScore   = Math.round((mobile.lighthouseResult?.categories?.seo?.score ?? 0) * 100);
+  // Mobile friendliness: use mobile performance + accessibility as proxy
+  const mobileScore = Math.round((
+    (mobile.lighthouseResult?.categories?.performance?.score ?? 0) * 0.5 +
+    (mobile.lighthouseResult?.categories?.accessibility?.score ?? 0) * 0.5
+  ) * 100);
+
+  const overall = Math.round((perfScore + seoScore + mobileScore) / 3);
+  const [ovLabel, ovDesc] = overallVerdict(overall);
+
+  // Header
+  document.getElementById('res-url').textContent = url;
+  document.getElementById('res-title').textContent = 'Web Health Report';
+
+  // Overall
+  const ovEl = document.getElementById('overall-score');
+  ovEl.textContent = overall;
+  ovEl.className = 'overall-num ' + scoreClass(overall);
+  document.getElementById('overall-label').textContent = ovLabel;
+  document.getElementById('overall-desc').textContent = ovDesc;
+
+  // Category scores
+  setScore('perf-score', 'perf-bar', 'perf-desc', perfScore,
+    perfScore >= 90 ? 'Fast load times' : perfScore >= 50 ? 'Some slowness detected' : 'Slow — users may leave');
+  setScore('seo-score', 'seo-bar', 'seo-desc', seoScore,
+    seoScore >= 90 ? 'Well optimized for search' : seoScore >= 50 ? 'SEO improvements available' : 'Poor search visibility');
+  setScore('mobile-score', 'mobile-bar', 'mobile-desc', mobileScore,
+    mobileScore >= 90 ? 'Great mobile experience' : mobileScore >= 50 ? 'Mobile experience needs work' : 'Poor mobile experience');
+
+  // Audit items from lighthouse
+  const audits = mobile.lighthouseResult?.audits ?? {};
+  const items = buildAuditItems(audits, perfScore, seoScore, mobileScore);
+  const table = document.getElementById('audit-items');
+  table.innerHTML = items.map(item => `
+    <div class="audit-item">
+      <div class="audit-icon">${item.icon}</div>
+      <div>
+        <div class="audit-name">${item.name}</div>
+        <div class="audit-desc">${item.desc}</div>
+      </div>
+      <div class="audit-badge ${item.status}">${item.label}</div>
+    </div>
+  `).join('');
+
+  // Timestamp
+  document.getElementById('res-timestamp').textContent =
+    'Generated ' + new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+
+  document.getElementById('results').style.display = 'block';
+}
+
+function buildAuditItems(audits, perfScore, seoScore, mobileScore) {
+  const items = [];
+
+  function addItem(key, name, goodLabel, warnLabel, badLabel, icon) {
+    const a = audits[key];
+    if(!a) return;
+    const score = a.score === null ? null : Math.round((a.score ?? 0) * 100);
+    let status, label;
+    if(score === null || score >= 90)     { status='good'; label=goodLabel; }
+    else if(score >= 50)                  { status='warn'; label=warnLabel; }
+    else                                  { status='bad';  label=badLabel; }
+    const desc = a.displayValue || a.description?.split('.')[0] || '';
+    items.push({icon, name, desc, status, label});
+  }
+
+  // Performance
+  addItem('first-contentful-paint', 'First Contentful Paint', 'Fast', 'Moderate', 'Slow', '⚡');
+  addItem('largest-contentful-paint', 'Largest Contentful Paint', 'Fast', 'Moderate', 'Slow', '🖼️');
+  addItem('total-blocking-time', 'Total Blocking Time', 'Low', 'Moderate', 'High', '⏱️');
+  addItem('cumulative-layout-shift', 'Layout Stability (CLS)', 'Stable', 'Some Shift', 'Unstable', '📐');
+  addItem('speed-index', 'Speed Index', 'Fast', 'Moderate', 'Slow', '🚀');
+  addItem('render-blocking-resources', 'Render-Blocking Resources', 'None', 'Some', 'Blocking', '🚧');
+  addItem('uses-optimized-images', 'Image Optimization', 'Optimized', 'Improvable', 'Unoptimized', '🖼');
+  addItem('uses-text-compression', 'Text Compression', 'Enabled', 'Partial', 'Disabled', '📦');
+  addItem('uses-responsive-images', 'Responsive Images', 'Enabled', 'Partial', 'Missing', '📱');
+  addItem('offscreen-images', 'Lazy Loading', 'Enabled', 'Improvable', 'Missing', '🔽');
+
+  // SEO
+  addItem('meta-description', 'Meta Description', 'Present', 'Improvable', 'Missing', '📝');
+  addItem('document-title', 'Page Title', 'Present', 'Improvable', 'Missing', '🏷️');
+  addItem('hreflang', 'Language Declaration', 'Valid', 'Check', 'Invalid', '🌐');
+  addItem('canonical', 'Canonical URL', 'Set', 'Check', 'Missing', '🔗');
+  addItem('robots-txt', 'Robots.txt', 'Valid', 'Check', 'Issues Found', '🤖');
+  addItem('structured-data', 'Structured Data', 'Present', 'Improvable', 'Missing', '📊');
+  addItem('link-text', 'Descriptive Link Text', 'Good', 'Improvable', 'Poor', '🔗');
+  addItem('image-alt', 'Image Alt Text', 'Present', 'Some Missing', 'Missing', '♿');
+
+  // Mobile / Accessibility
+  addItem('viewport', 'Viewport Meta Tag', 'Set', 'Check', 'Missing', '📐');
+  addItem('font-size', 'Font Size (Mobile)', 'Legible', 'Small', 'Too Small', '🔠');
+  addItem('tap-targets', 'Tap Target Sizing', 'Good', 'Small', 'Too Small', '👆');
+  addItem('content-width', 'Content Width', 'Fits Screen', 'Check', 'Overflow', '↔️');
+
+  return items;
+}
+
+function showError(msg) {
+  const box = document.getElementById('error-box');
+  box.textContent = msg;
+  box.style.display = 'block';
+}
+
+function newAudit() {
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('url-input').value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Warn if opened as a local file
+if(location.protocol === 'file:') {
+  document.getElementById('protocol-warning').style.display = 'block';
+}
+</script>
+</body>
+</html>
+ENDOFFILE

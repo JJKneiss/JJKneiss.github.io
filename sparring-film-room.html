@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Film Room</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface-2: #161616;
+      --border: #1e1e1e;
+      --border-2: #2a2a2a;
+      --ink: #e8e8e0;
+      --ink-2: #888880;
+      --ink-3: #444440;
+      --accent: #c8f04a;
+      --accent-dim: rgba(200,240,74,0.08);
+      --accent-border: rgba(200,240,74,0.25);
+      --bad: #f04a4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--ink); font-family: 'DM Mono', monospace; min-height: 100vh; display: flex; flex-direction: column; }
+
+    header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 0.5px solid var(--border); flex-shrink: 0; }
+    header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.08em; }
+    header span { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3); }
+
+    /* ── LOAD SCREEN ── */
+    #load-screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding: 2rem; }
+    .load-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.06em; text-align: center; }
+    .load-subtitle { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); text-align: center; margin-top: 0.25rem; }
+    .load-box { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 1rem; }
+    #drop-zone {
+      border: 0.5px dashed var(--border-2); border-radius: 3px; padding: 3rem 2rem;
+      text-align: center; cursor: pointer; transition: all 0.15s;
+      display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+    }
+    #drop-zone:hover, #drop-zone.drag-over { border-color: var(--accent-border); background: var(--accent-dim); }
+    .dz-icon { font-size: 2rem; line-height: 1; }
+    .dz-main { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+    .dz-sub { font-size: 10px; letter-spacing: 0.06em; color: var(--ink-3); }
+    .dz-sub strong { color: var(--accent); }
+    .btn-load {
+      background: var(--accent-dim); border: 0.5px solid var(--accent-border);
+      border-radius: 3px; padding: 0.7rem 1.5rem; font-family: 'DM Mono', monospace;
+      font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); cursor: pointer; transition: all 0.15s; width: 100%;
+    }
+    .btn-load:hover { background: rgba(200,240,74,0.14); }
+    .load-formats { font-size: 10px; letter-spacing: 0.06em; color: var(--ink-3); text-align: center; }
+    input[type="file"] { display: none; }
+
+    /* ── FILM ROOM ── */
+    #film-room { display: none; flex: 1; flex-direction: column; }
+    .room-header { padding: 0.6rem 1rem; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+    .room-filename { font-size: 11px; letter-spacing: 0.06em; color: var(--ink-2); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btn-small { background: transparent; border: 0.5px solid var(--border-2); border-radius: 2px; padding: 0.3rem 0.7rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); cursor: pointer; transition: all 0.1s; }
+    .btn-small:hover { color: var(--ink); }
+    .btn-small.danger:hover { color: var(--bad); border-color: var(--bad); }
+
+    .room-body { display: grid; grid-template-columns: 1fr 320px; flex: 1; min-height: 0; }
+
+    /* ── VIDEO PANEL ── */
+    .video-panel { display: flex; flex-direction: column; border-right: 0.5px solid var(--border); }
+    .video-wrap { background: #000; flex: 1; display: flex; align-items: center; justify-content: center; }
+    #video-el { width: 100%; max-height: 58vh; object-fit: contain; display: block; }
+
+    .timeline-bar { background: var(--surface); border-top: 0.5px solid var(--border); padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+    .time-display { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.06em; color: var(--accent); width: 72px; flex-shrink: 0; }
+    .progress-wrap { flex: 1; height: 4px; background: var(--border-2); border-radius: 2px; cursor: pointer; position: relative; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; pointer-events: none; }
+    .timeline-pin { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 1.5px solid var(--bg); cursor: pointer; transition: transform 0.1s; z-index: 1; }
+    .timeline-pin:hover { transform: translate(-50%,-50%) scale(1.5); }
+
+    .controls { background: var(--surface); border-top: 0.5px solid var(--border); padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; flex-wrap: wrap; }
+    .ctrl-btn { background: transparent; border: none; color: var(--ink-2); cursor: pointer; padding: 0.3rem 0.45rem; font-size: 12px; border-radius: 2px; transition: color 0.1s; font-family: 'DM Mono', monospace; white-space: nowrap; }
+    .ctrl-btn:hover { color: var(--ink); }
+    .ctrl-sep { width: 0.5px; height: 16px; background: var(--border-2); margin: 0 0.2rem; flex-shrink: 0; }
+    .btn-mark { margin-left: auto; border: 0.5px solid var(--accent-border); color: var(--accent); background: var(--accent-dim); border-radius: 3px; padding: 0.35rem 0.9rem; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
+    .btn-mark:hover { background: rgba(200,240,74,0.14); }
+
+    /* ── NOTES PANEL ── */
+    .notes-panel { display: flex; flex-direction: column; overflow: hidden; }
+    .notes-header { padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .notes-header-title { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3); }
+    .note-count { font-size: 10px; color: var(--ink-3); }
+
+    .add-note-row { padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0; }
+    .ts-row { display: flex; gap: 6px; align-items: center; }
+    .ts-input { background: var(--surface-2); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 0.35rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); width: 76px; outline: none; transition: border-color 0.15s; }
+    .ts-input:focus { border-color: var(--accent-border); }
+    .btn-add { background: var(--accent-dim); border: 0.5px solid var(--accent-border); border-radius: 2px; padding: 0.35rem 0.7rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); cursor: pointer; transition: all 0.15s; }
+    .btn-add:hover { background: rgba(200,240,74,0.14); }
+    .btn-grab { background: transparent; border: 0.5px solid var(--border-2); border-radius: 2px; padding: 0.35rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-3); cursor: pointer; transition: all 0.15s; }
+    .btn-grab:hover { color: var(--ink); border-color: var(--border-2); }
+    .note-textarea { background: var(--surface-2); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 0.5rem 0.7rem; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink); resize: none; outline: none; line-height: 1.5; transition: border-color 0.15s; height: 64px; }
+    .note-textarea:focus { border-color: var(--accent-border); }
+    .note-textarea::placeholder { color: var(--ink-3); }
+    .hint { font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; }
+
+    .notes-list { flex: 1; overflow-y: auto; }
+    .notes-list::-webkit-scrollbar { width: 3px; }
+    .notes-list::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 2px; }
+    .note-item { padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background 0.1s; display: grid; grid-template-columns: auto 1fr auto; gap: 0.5rem; align-items: start; }
+    .note-item:hover { background: var(--surface-2); }
+    .note-item:last-child { border-bottom: none; }
+    .note-ts { font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem; letter-spacing: 0.06em; color: var(--accent); padding-top: 1px; white-space: nowrap; }
+    .note-text { font-size: 11px; line-height: 1.6; color: var(--ink-2); word-break: break-word; }
+    .note-del { background: transparent; border: none; color: var(--ink-3); cursor: pointer; font-size: 14px; padding: 0 0.2rem; line-height: 1; transition: color 0.1s; }
+    .note-del:hover { color: var(--bad); }
+    .empty-state { padding: 2.5rem 1rem; text-align: center; font-size: 11px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase; line-height: 2.2; }
+
+    @media (max-width: 700px) {
+      .room-body { grid-template-columns: 1fr; }
+      .notes-panel { max-height: 45vh; border-top: 0.5px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#444440;text-decoration:none;border:0.5px solid #2a2a2a;border-radius:2px;padding:4px 10px;margin-right:0.25rem;transition:all 0.15s;white-space:nowrap;" onmouseover="this.style.color='#e8e8e0';this.style.borderColor='#888880'" onmouseout="this.style.color='#444440';this.style.borderColor='#2a2a2a'">← Home</a>
+  <h1>Film Room</h1>
+  <span>Sparring Review</span>
+</header>
+
+<!-- LOAD SCREEN -->
+<div id="load-screen">
+  <div>
+    <div class="load-title">Review Your Film</div>
+    <div class="load-subtitle">Timestamp. Annotate. Improve.</div>
+  </div>
+  <div class="load-box">
+    <div id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <div class="dz-icon">📹</div>
+      <div class="dz-main">Drop a video file here</div>
+      <div class="dz-sub">or <strong>click to browse</strong></div>
+    </div>
+    <button class="btn-load" onclick="document.getElementById('file-input').click()">Choose Video File</button>
+    <div class="load-formats">MP4 · MOV · WebM · AVI — stays 100% local, never uploaded</div>
+  </div>
+  <input type="file" id="file-input" accept="video/*" onchange="loadFile(this)">
+</div>
+
+<!-- FILM ROOM -->
+<div id="film-room">
+  <div class="room-header">
+    <div class="room-filename" id="room-filename">—</div>
+    <button class="btn-small" onclick="exportNotes()">Export Notes</button>
+    <button class="btn-small danger" onclick="closeRoom()">✕ Close</button>
+  </div>
+
+  <div class="room-body">
+    <!-- VIDEO -->
+    <div class="video-panel">
+      <div class="video-wrap">
+        <video id="video-el" controls></video>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="time-display" id="time-display">0:00</div>
+        <div class="progress-wrap" id="progress-wrap" onclick="seekTo(event)">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          <div id="timeline-pins"></div>
+        </div>
+        <div class="time-display" id="duration-display" style="text-align:right;color:var(--ink-3)">0:00</div>
+      </div>
+
+      <div class="controls">
+        <button class="ctrl-btn" onclick="skip(-10)" title="Back 10s">⏮ 10s</button>
+        <button class="ctrl-btn" onclick="skip(-5)" title="Back 5s">⏮ 5s</button>
+        <button class="ctrl-btn" onclick="togglePlay()" id="play-btn">▶</button>
+        <button class="ctrl-btn" onclick="skip(5)" title="Forward 5s">5s ⏭</button>
+        <button class="ctrl-btn" onclick="skip(10)" title="Forward 10s">10s ⏭</button>
+        <div class="ctrl-sep"></div>
+        <button class="ctrl-btn" onclick="changeSpeed(0.5)">0.5×</button>
+        <button class="ctrl-btn" onclick="changeSpeed(1)">1×</button>
+        <button class="ctrl-btn" onclick="changeSpeed(1.5)">1.5×</button>
+        <button class="btn-mark" onclick="markTimestamp()" title="Mark current time (M)">+ Mark</button>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="notes-panel">
+      <div class="notes-header">
+        <div class="notes-header-title">Notes</div>
+        <div class="note-count" id="note-count">0 notes</div>
+      </div>
+
+      <div class="add-note-row">
+        <div class="ts-row">
+          <input class="ts-input" id="ts-input" placeholder="0:00" title="Timestamp" />
+          <button class="btn-grab" onclick="markTimestamp()" title="Grab current time">⏱ Grab</button>
+          <button class="btn-add" onclick="addNote()">+ Add</button>
+        </div>
+        <textarea class="note-textarea" id="note-input" placeholder="What happened here? Position, mistake, opportunity…" onkeydown="if(event.key==='Enter'&&(event.metaKey||event.ctrlKey))addNote()"></textarea>
+        <div class="hint">⌘↵ or Ctrl↵ to add · M to mark time · Space to play/pause</div>
+      </div>
+
+      <div class="notes-list" id="notes-list">
+        <div class="empty-state">No notes yet.<br>Hit + Mark while watching<br>to drop a pin.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let notes = [];
+let videoDuration = 0;
+
+// ── LOAD ──
+function loadFile(input) {
+  const file = input.files[0];
+  if(!file) return;
+  openRoom(file.name, URL.createObjectURL(file));
+}
+
+const dropZone = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if(file && file.type.startsWith('video/')) openRoom(file.name, URL.createObjectURL(file));
+  else if(file) alert('Please drop a video file (MP4, MOV, WebM, etc.)');
+});
+
+function openRoom(name, src) {
+  notes = [];
+  document.getElementById('load-screen').style.display = 'none';
+  document.getElementById('film-room').style.display = 'flex';
+  document.getElementById('room-filename').textContent = name;
+  renderNotes();
+  const v = document.getElementById('video-el');
+  v.src = src;
+  v.load();
+  setupVideoEvents(v);
+}
+
+function closeRoom() {
+  const v = document.getElementById('video-el');
+  v.pause(); v.src = '';
+  document.getElementById('film-room').style.display = 'none';
+  document.getElementById('load-screen').style.display = 'flex';
+  document.getElementById('file-input').value = '';
+  notes = []; renderNotes();
+}
+
+// ── VIDEO ──
+function setupVideoEvents(v) {
+  v.addEventListener('timeupdate', () => {
+    document.getElementById('time-display').textContent = fmt(v.currentTime);
+    if(v.duration > 0) {
+      document.getElementById('progress-fill').style.width = (v.currentTime / v.duration * 100) + '%';
+      renderTimelinePins(v.duration);
+    }
+  });
+  v.addEventListener('loadedmetadata', () => {
+    videoDuration = v.duration;
+    document.getElementById('duration-display').textContent = fmt(v.duration);
+  });
+  v.addEventListener('play', () => document.getElementById('play-btn').textContent = '⏸');
+  v.addEventListener('pause', () => document.getElementById('play-btn').textContent = '▶');
+  v.addEventListener('ended', () => document.getElementById('play-btn').textContent = '▶');
+}
+
+function togglePlay() {
+  const v = document.getElementById('video-el');
+  v.paused ? v.play() : v.pause();
+}
+
+function skip(s) {
+  const v = document.getElementById('video-el');
+  v.currentTime = Math.max(0, Math.min(v.duration || 0, v.currentTime + s));
+}
+
+function changeSpeed(r) {
+  document.getElementById('video-el').playbackRate = r;
+}
+
+function seekTo(e) {
+  const wrap = document.getElementById('progress-wrap');
+  const rect = wrap.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  document.getElementById('video-el').currentTime = pct * videoDuration;
+}
+
+// ── TIMESTAMPS ──
+function fmt(s) {
+  if(!isFinite(s) || s < 0) return '0:00';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+function parseTs(str) {
+  const parts = str.trim().split(':').map(Number);
+  if(parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
+  if(parts.length === 2) return parts[0]*60 + parts[1];
+  return Number(parts[0]) || 0;
+}
+
+function markTimestamp() {
+  const v = document.getElementById('video-el');
+  document.getElementById('ts-input').value = fmt(v.currentTime);
+  document.getElementById('note-input').focus();
+}
+
+// ── NOTES ──
+function addNote() {
+  const tsStr = document.getElementById('ts-input').value.trim();
+  const text = document.getElementById('note-input').value.trim();
+  if(!text) { document.getElementById('note-input').focus(); return; }
+  const t = tsStr ? parseTs(tsStr) : document.getElementById('video-el').currentTime;
+  notes.push({ id: Date.now(), t, tsStr: fmt(t), text });
+  notes.sort((a, b) => a.t - b.t);
+  document.getElementById('ts-input').value = '';
+  document.getElementById('note-input').value = '';
+  renderNotes();
+  renderTimelinePins(videoDuration);
+}
+
+function deleteNote(id) {
+  notes = notes.filter(n => n.id !== id);
+  renderNotes();
+  renderTimelinePins(videoDuration);
+}
+
+function jumpToNote(t) {
+  const v = document.getElementById('video-el');
+  v.currentTime = t;
+  v.play();
+}
+
+function renderNotes() {
+  const list = document.getElementById('notes-list');
+  document.getElementById('note-count').textContent = notes.length + ' note' + (notes.length === 1 ? '' : 's');
+  if(notes.length === 0) {
+    list.innerHTML = '<div class="empty-state">No notes yet.<br>Hit + Mark while watching<br>to drop a pin.</div>';
+    return;
+  }
+  list.innerHTML = notes.map(n => `
+    <div class="note-item" onclick="jumpToNote(${n.t})">
+      <div class="note-ts">${n.tsStr}</div>
+      <div class="note-text">${escHtml(n.text)}</div>
+      <button class="note-del" onclick="event.stopPropagation();deleteNote(${n.id})" title="Delete">×</button>
+    </div>
+  `).join('');
+}
+
+function renderTimelinePins(duration) {
+  if(!duration || duration <= 0) return;
+  document.getElementById('timeline-pins').innerHTML = notes.map(n => {
+    const pct = Math.min(100, (n.t / duration) * 100);
+    return `<div class="timeline-pin" style="left:${pct}%" onclick="event.stopPropagation();jumpToNote(${n.t})" title="${n.tsStr}: ${escAttr(n.text)}"></div>`;
+  }).join('');
+}
+
+// ── EXPORT ──
+function exportNotes() {
+  if(notes.length === 0) { alert('No notes to export yet.'); return; }
+  const name = document.getElementById('room-filename').textContent;
+  const lines = [
+    `Film Room Notes`,
+    `File: ${name}`,
+    `Generated: ${new Date().toLocaleString()}`,
+    '', '─'.repeat(48), ''
+  ];
+  notes.forEach(n => { lines.push(`[${n.tsStr}]  ${n.text}`); lines.push(''); });
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'film-room-notes.txt';
+  a.click();
+}
+
+// ── UTILS ──
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+function escAttr(s) {
+  return s.replace(/"/g,'&quot;').replace(/'/g,'&#39;').slice(0, 60) + (s.length > 60 ? '…' : '');
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', e => {
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if(document.getElementById('film-room').style.display === 'none') return;
+  if(e.key === ' ') { e.preventDefault(); togglePlay(); }
+  if(e.key === 'm' || e.key === 'M') markTimestamp();
+  if(e.key === 'ArrowLeft') skip(e.shiftKey ? -10 : -5);
+  if(e.key === 'ArrowRight') skip(e.shiftKey ? 10 : 5);
+});
+</script>
+</body>
+</html>
