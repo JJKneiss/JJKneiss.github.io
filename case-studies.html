@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Work — Jamie Kneiss</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111;
+      --surface-2: #161616;
+      --border: #1e1e1e;
+      --border-2: #2a2a2a;
+      --ink: #e8e8e0;
+      --ink-2: #b0b0a8;
+      --ink-3: #666660;
+      --accent: #c8f04a;
+      --accent-dim: rgba(200,240,74,0.07);
+      --accent-border: rgba(200,240,74,0.2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; border-bottom: 0.5px solid var(--border);
+      background: rgba(10,10,10,0.92); backdrop-filter: blur(8px);
+    }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.08em; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .page-header { padding: 5rem 2rem 3rem; max-width: 860px; margin: 0 auto; }
+    .page-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); font-family: 'DM Mono', monospace; margin-bottom: 1rem; }
+    .page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: 0.02em; line-height: 0.95; color: var(--ink); margin-bottom: 1rem; }
+    .page-desc { font-size: 1rem; color: var(--ink-2); max-width: 520px; line-height: 1.7; }
+
+    .divider { border: none; border-top: 0.5px solid var(--border); }
+
+    /* ── CASE STUDY ── */
+    .case-study { padding: 4rem 2rem; max-width: 860px; margin: 0 auto; }
+    .case-study + .case-study { border-top: 0.5px solid var(--border); }
+
+    .cs-meta { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .cs-tag { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-3); margin-bottom: 0.5rem; }
+    .cs-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; color: var(--ink); line-height: 1; margin-bottom: 0.4rem; }
+    .cs-url { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--accent); text-decoration: none; letter-spacing: 0.05em; }
+    .cs-url:hover { opacity: 0.8; }
+    .cs-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 0.75rem; }
+    .cs-pill { font-size: 9px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-3); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 2px 8px; }
+
+    .cs-body { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+    @media (max-width: 700px) { .cs-body { grid-template-columns: 1fr; } }
+
+    .cs-block-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--accent); margin-bottom: 0.5rem; }
+    .cs-block-text { font-size: 0.9rem; color: var(--ink-2); line-height: 1.7; }
+
+    .cs-link-row { margin-top: 2rem; }
+    .btn-ghost { display: inline-block; border: 0.5px solid var(--border-2); color: var(--ink-2); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem 1.4rem; border-radius: 2px; text-decoration: none; transition: all 0.15s; }
+    .btn-ghost:hover { border-color: var(--ink-3); color: var(--ink); }
+
+    footer { border-top: 0.5px solid var(--border); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .footer-name { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: var(--ink-3); }
+    .footer-note { font-size: 10px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-3); }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem; }
+      .nav-links { gap: 1rem; }
+      .page-header { padding: 3.5rem 1.25rem 2rem; }
+      .case-study { padding: 3rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <a class="nav-logo" href="index.html">Jamie Kneiss</a>
+  <ul class="nav-links">
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="assets/jamie-kneiss-resume.pdf" target="_blank">Résumé</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-label">Case Studies</div>
+  <h1 class="page-title">Client Work</h1>
+  <p class="page-desc">Three website rebuilds for real clients — a law firm, a nonprofit, and a manufacturer. Each started with an outdated site and a clear goal: make it modern, make it easy to manage, make it work.</p>
+</div>
+
+<hr class="divider">
+
+<!-- MCCORMICK -->
+<article class="case-study" aria-labelledby="cs-mccormick">
+  <div class="cs-meta">
+    <div>
+      <div class="cs-tag">WordPress · Law</div>
+      <h2 class="cs-title" id="cs-mccormick">McCormick Law Firm</h2>
+      <a class="cs-url" href="https://mcclaw.com/" target="_blank" rel="noopener">mcclaw.com ↗</a>
+      <div class="cs-pills">
+        <span class="cs-pill">WordPress</span>
+        <span class="cs-pill">PHP</span>
+        <span class="cs-pill">CSS</span>
+        <span class="cs-pill">DNS</span>
+      </div>
+    </div>
+  </div>
+  <div class="cs-body">
+    <div>
+      <div class="cs-block-label">The Problem</div>
+      <p class="cs-block-text">The existing site had aged out — the design felt dated and didn't reflect the professionalism of the firm. The client needed a modern rebuild that would build trust on first contact with potential clients.</p>
+    </div>
+    <div>
+      <div class="cs-block-label">The Work</div>
+      <p class="cs-block-text">Full WordPress rebuild from the ground up. Designed several pages from scratch with no existing template to follow — practice area pages, attorney profiles, and a contact section — while keeping the information architecture clean and the visual language consistent throughout.</p>
+    </div>
+    <div>
+      <div class="cs-block-label">The Outcome</div>
+      <p class="cs-block-text">A clean, professional site built to instill confidence. Design decisions were driven by what a potential client would need to feel assured — clear credentials, accessible contact points, and a layout that gets out of its own way.</p>
+    </div>
+  </div>
+  <div class="cs-link-row">
+    <a class="btn-ghost" href="https://mcclaw.com/" target="_blank" rel="noopener">View live site ↗</a>
+  </div>
+</article>
+
+<!-- FAMILIES UNITED -->
+<article class="case-study" aria-labelledby="cs-families">
+  <div class="cs-meta">
+    <div>
+      <div class="cs-tag">WordPress · Nonprofit</div>
+      <h2 class="cs-title" id="cs-families">Families United Network</h2>
+      <a class="cs-url" href="https://families4kids.org/" target="_blank" rel="noopener">families4kids.org ↗</a>
+      <div class="cs-pills">
+        <span class="cs-pill">WordPress</span>
+        <span class="cs-pill">PHP</span>
+        <span class="cs-pill">CSS</span>
+        <span class="cs-pill">Migration</span>
+      </div>
+    </div>
+  </div>
+  <div class="cs-body">
+    <div>
+      <div class="cs-block-label">The Problem</div>
+      <p class="cs-block-text">The organization's site was built on Joomla — a platform the team found difficult to update and maintain without technical help. Content was going stale and staff couldn't make basic changes independently.</p>
+    </div>
+    <div>
+      <div class="cs-block-label">The Work</div>
+      <p class="cs-block-text">Full migration from Joomla to WordPress, rebuilding the site from scratch in the process. Designed multiple pages without an existing visual template to reference. The priority was a warm, accessible design that felt appropriate for an adoption and foster care audience — and a backend that staff could actually use.</p>
+    </div>
+    <div>
+      <div class="cs-block-label">The Outcome</div>
+      <p class="cs-block-text">A site the organization owns — staff can update content, add resources, and manage pages without a developer. The design balances warmth and credibility, serving both families seeking support and donors evaluating the organization.</p>
+    </div>
+  </div>
+  <div class="cs-link-row">
+    <a class="btn-ghost" href="https://families4kids.org/" target="_blank" rel="noopener">View live site ↗</a>
+  </div>
+</article>
+
+<!-- LYCOMING -->
+<article class="case-study" aria-labelledby="cs-lycoming">
+  <div class="cs-meta">
+    <div>
+      <div class="cs-tag">WordPress · Manufacturing</div>
+      <h2 class="cs-title" id="cs-lycoming">Lycoming Vault & Precast</h2>
+      <a class="cs-url" href="https://lycomingprecast.com/" target="_blank" rel="noopener">lycomingprecast.com ↗</a>
+      <div class="cs-pills">
+        <span class="cs-pill">WordPress</span>
+        <span class="cs-pill">PHP</span>
+        <span class="cs-pill">CSS</span>
+        <span class="cs-pill">Forms</span>
+      </div>
+    </div>
+  </div>
+  <div class="cs-body">
+    <div>
+      <div class="cs-block-label">The Problem</div>
+      <p class="cs-block-text">The existing site wasn't doing the business justice. The client wanted a modernized presence that would actively sell their work — showcasing products with the authority and clarity a trade audience expects.</p>
+    </div>
+    <div>
+      <div class="cs-block-label">The Work</div>
+      <p class="cs-block-text">Full WordPress rebuild with a focus on product presentation — catalog pages, specifications, and a visual identity that reflects the weight and craft of precast concrete work. A significant challenge was getting contact forms configured and reliably delivering inquiries, which required debugging form plugins, server-side mail configuration, and testing across environments.</p>
+    </div>
+    <div>
+      <div class="cs-block-label">The Outcome</div>
+      <p class="cs-block-text">A site built for a trade audience that knows what it's looking for — product information is easy to find, specifications are clearly presented, and the contact path works. The rebuild gave the business a web presence that matches the quality of the work they do.</p>
+    </div>
+  </div>
+  <div class="cs-link-row">
+    <a class="btn-ghost" href="https://lycomingprecast.com/" target="_blank" rel="noopener">View live site ↗</a>
+  </div>
+</article>
+
+<footer>
+  <span class="footer-name">Jamie Kneiss</span>
+  <span class="footer-note">© 2026 Jamie Kneiss · Built with HTML, CSS & JS</span>
+</footer>
+
+</body>
+</html>
