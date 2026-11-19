@@ -3,352 +3,228 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jamie Kneiss — Front-End Developer</title>
-<meta name="description" content="Jamie Kneiss — Front-end developer based in Pittsburgh, PA. Full Sail University graduate building clean, purposeful web experiences.">
-<meta property="og:title" content="Jamie Kneiss — Front-End Developer">
-<meta property="og:description" content="Front-end developer based in Pittsburgh, PA. Full Sail University graduate building clean, purposeful web experiences.">
+<title>Plumbline — Websites for Pittsburgh's local businesses | Jamie Kneiss</title>
+<meta name="description" content="Plumbline is Jamie Kneiss's Pittsburgh web studio: fast, mobile-first websites for local service businesses, built straight and true. Start with a free site check.">
+<meta name="theme-color" content="#F5F1E8">
+<meta property="og:title" content="Plumbline — Websites for Pittsburgh's local businesses">
+<meta property="og:description" content="Fast, mobile-first websites for local service businesses, built by Jamie Kneiss in Pittsburgh. Start with a free site check.">
 <meta property="og:url" content="https://jjkneiss.github.io/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://jjkneiss.github.io/assets/og-preview.png">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0a0a0a;
-      --surface: #111;
-      --surface-2: #161616;
-      --border: #1e1e1e;
-      --border-2: #2a2a2a;
-      --ink: #e8e8e0;
-      --ink-2: #888880;
-      --ink-3: #444440;
-      --accent: #c8f04a;
-      --accent-dim: rgba(200,240,74,0.07);
-      --accent-border: rgba(200,240,74,0.2);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
-
-    /* ── SKIP LINK ── */
-    .skip-link { position: absolute; top: -40px; left: 1rem; background: var(--accent); color: #0a0a0a; padding: 0.5rem 1rem; border-radius: 2px; font-size: 13px; font-weight: 500; text-decoration: none; z-index: 9999; transition: top 0.15s; }
-    .skip-link:focus { top: 1rem; }
-    /* ── NAV ── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 2rem; border-bottom: 0.5px solid var(--border);
-      background: rgba(10,10,10,0.92); backdrop-filter: blur(8px);
-    }
-    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.08em; color: var(--ink); text-decoration: none; }
-    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
-    .nav-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); text-decoration: none; transition: color 0.15s; }
-    .nav-links a:hover { color: var(--ink); }
-
-    /* ── HERO ── */
-    .hero { padding: 6rem 2rem 5rem; max-width: 860px; margin: 0 auto; }
-    .hero-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); font-family: 'DM Mono', monospace; margin-bottom: 1.25rem; }
-    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 10vw, 6rem); letter-spacing: 0.02em; line-height: 0.95; color: var(--ink); margin-bottom: 1.5rem; }
-    .hero-title em { color: var(--accent); font-style: normal; }
-    .hero-desc { font-size: 1.05rem; color: var(--ink-2); max-width: 520px; line-height: 1.7; margin-bottom: 2rem; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn-primary { display: inline-block; background: var(--accent); color: #0a0a0a; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem 1.4rem; border-radius: 2px; text-decoration: none; font-weight: 500; transition: opacity 0.15s; }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-ghost { display: inline-block; border: 0.5px solid var(--border-2); color: var(--ink-2); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem 1.4rem; border-radius: 2px; text-decoration: none; transition: all 0.15s; }
-    .btn-ghost:hover { border-color: var(--ink-3); color: var(--ink); }
-
-    /* ── SECTION HEADER ── */
-    .section { padding: 5rem 2rem; max-width: 860px; margin: 0 auto; }
-    .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-2); font-family: 'DM Mono', monospace; margin-bottom: 0.6rem; }
-    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.5rem; }
-    .section-desc { font-size: 0.95rem; color: var(--ink-2); max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
-    .divider { border: none; border-top: 0.5px solid var(--border); }
-
-    /* ── WORK GRID ── */
-    .work-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 4px; overflow: hidden; }
-    .work-card { background: var(--surface); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; text-decoration: none; transition: background 0.15s; }
-    .work-card:hover { background: var(--surface-2); }
-    .work-card:hover .work-arrow { transform: translateX(4px); }
-    .work-card-tag { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-3); }
-    .work-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 0.05em; color: var(--ink); line-height: 1.2; }
-    .work-card-desc { font-size: 12px; color: var(--ink-2); line-height: 1.6; flex: 1; }
-    .work-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.25rem; }
-    .work-card-tech { display: flex; gap: 6px; flex-wrap: wrap; }
-    .tech-pill { font-size: 9px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-2); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 2px 7px; }
-    .work-arrow { font-size: 12px; color: var(--accent); transition: transform 0.15s; }
-
-    /* ── BIO ── */
-    .bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    @media (max-width: 600px) { .bio-grid { grid-template-columns: 1fr; } }
-    .bio-block { display: flex; flex-direction: column; gap: 0.5rem; }
-    .bio-block-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-2); }
-    .bio-block-text { font-size: 0.9rem; color: var(--ink-2); line-height: 1.7; }
-    .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
-    .skill-tag { font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; color: var(--ink-2); border: 0.5px solid var(--border-2); border-radius: 2px; padding: 3px 9px; }
-
-    /* ── CONTACT ── */
-    .contact-card { background: var(--surface); border: 0.5px solid var(--border-2); border-radius: 4px; padding: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
-    .contact-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; color: var(--ink); }
-    .contact-desc { font-size: 0.95rem; color: var(--ink-2); max-width: 480px; line-height: 1.7; }
-    .contact-links { display: flex; gap: 10px; flex-wrap: wrap; }
-    .contact-link { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--ink-2); text-decoration: none; border: 0.5px solid var(--border-2); border-radius: 2px; padding: 0.55rem 1rem; transition: all 0.15s; }
-    .contact-link:hover { color: var(--ink); border-color: var(--ink-3); }
-    .contact-link.accent { color: var(--accent); border-color: var(--accent-border); background: var(--accent-dim); }
-    .contact-link.accent:hover { background: rgba(200,240,74,0.12); }
-
-    /* ── FOOTER ── */
-    footer { border-top: 0.5px solid var(--border); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-    .footer-name { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: var(--ink-2); }
-    .footer-note { font-size: 10px; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; color: var(--ink-2); }
-
-    @media (max-width: 600px) {
-      nav { padding: 1rem; }
-      .nav-links { gap: 1rem; }
-      .hero { padding: 4rem 1.25rem 3rem; }
-      .section { padding: 3.5rem 1.25rem; }
-    }
-  </style>
+<meta property="og:image" content="https://jjkneiss.github.io/assets/og_preview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 64'%3E%3Crect x='22.5' width='3' height='24' fill='%231A1F26'/%3E%3Crect x='18' y='22' width='12' height='6' rx='1' fill='%231A1F26'/%3E%3Cpath d='M12 30h24L24 63z' fill='%23F2B600'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/plumbline.css">
 </head>
 <body>
-<a class="skip-link" href="#work">Skip to content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<nav aria-label="Main navigation">
-  <a class="nav-logo" href="#">Jamie Kneiss</a>
-  <ul class="nav-links">
-    <li><a href="#work">Work</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="assets/jamie-kneiss-resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
-  </ul>
-</nav>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="Plumbline, home">
+      <svg viewBox="0 0 48 64" aria-hidden="true"><rect x="22.5" width="3" height="24" fill="currentColor"/><rect x="18" y="22" width="12" height="6" rx="1" fill="currentColor"/><path d="M12 30h24L24 63z" fill="#F2B600"/></svg>
+      <span class="brand-word">plumbline</span>
+      <span class="brand-by">by Jamie Kneiss</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        <li class="hide-sm"><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li class="hide-sm"><a href="#about">About</a></li>
+        <li><a class="pl-btn pl-btn--primary" href="#contact">Free site check</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-label">Jamie Kneiss — Front-End Developer, Pittsburgh PA</div>
-  <h1 class="hero-title">Building tools<br>that <em>actually</em><br>get used.</h1>
-  <p class="hero-desc">Full Sail University graduate building clean, functional web tools — standalone apps, client sites, and interactive experiences. Background in HTML, CSS, JavaScript, PHP, and WordPress. Currently seeking front-end roles in Pittsburgh or remote.</p>
-  <div class="hero-actions">
-    <a class="btn-primary" href="#work">See the work</a>
-    <a class="btn-ghost" href="#contact">Get in touch</a>
+  <svg class="hero-plumb" viewBox="0 0 48 340" aria-hidden="true"><rect x="23" width="2" height="280" fill="currentColor"/><rect x="18" y="278" width="12" height="6" rx="1" fill="currentColor"/><path d="M12 286h24l-12 52z" fill="#F2B600"/></svg>
+  <div class="wrap">
+    <div class="hero-inner">
+      <p class="label">Jamie Kneiss · Web developer · Pittsburgh, PA</p>
+      <h1>Websites for Pittsburgh's local businesses, <span class="hl">built straight and true.</span></h1>
+      <p class="hero-sub">Fast on a phone, easy to find on Google, and run by someone twenty minutes away, not an agency three states over.</p>
+      <div class="actions">
+        <a class="pl-btn pl-btn--primary" href="#contact">Get a free site check</a>
+        <a class="pl-btn" href="#work">See recent work</a>
+      </div>
+    </div>
   </div>
 </section>
 
-<hr class="divider">
+<!-- SERVICES -->
+<section class="section" id="services" aria-labelledby="services-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">Services</p>
+      <h2 class="section-title" id="services-title">What I do</h2>
+      <p class="section-desc">For plumbers, electricians, HVAC and roofing crews, and the salons, shops, and offices next door. One developer, start to finish.</p>
+    </div>
+    <div class="grid">
+      <div class="svc"><p class="label">01</p><h3>New sites</h3><p>Three to six pages, fast on a phone, with a call button on every screen and your real photos.</p></div>
+      <div class="svc"><p class="label">02</p><h3>Rebuilds</h3><p>Your old site rebuilt properly, keeping what already ranks on Google and what your customers already know.</p></div>
+      <div class="svc"><p class="label">03</p><h3>Site checks and fixes</h3><p>Speed, mobile, SEO, and accessibility, measured and explained on one page. Then I fix what matters most.</p></div>
+      <div class="svc"><p class="label">04</p><h3>Care plan</h3><p>Updates, backups, and small edits every month. One person to text when something looks off.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section--steel" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">How it works</p>
+      <h2 class="section-title" id="how-title">No surprises</h2>
+    </div>
+    <ol class="steps">
+      <li><p class="num" aria-hidden="true">1</p><h3>Free site check</h3><p>I run your current site through my audit tool and send back the three biggest problems in plain English.</p></li>
+      <li><p class="num" aria-hidden="true">2</p><h3>A straight quote</h3><p>You get a fixed price, a timeline, and a list of exactly what's included before any work starts.</p></li>
+      <li><p class="num" aria-hidden="true">3</p><h3>Build and launch</h3><p>I build it, you review it, and it goes live. I'm still around afterward if anything breaks.</p></li>
+    </ol>
+  </div>
+</section>
 
 <!-- WORK -->
-<section class="section" id="work">
-  <p class="section-label" aria-hidden="true">Portfolio</p>
-  <h2 class="section-title">Selected Work</h2>
-  <p class="section-desc">Six standalone tools built as portfolio pieces — each solving a real problem, each a single HTML file with no dependencies.</p>
+<section class="section" id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">Work</p>
+      <h2 class="section-title" id="work-title">Recent work</h2>
+      <p class="section-desc">Client sites for a law firm, a nonprofit, and a manufacturer, plus the tools I've built along the way.</p>
+    </div>
 
-  <div class="work-grid">
+    <h3 class="sub-head">Client sites <span class="label">4 projects</span></h3>
+    <div class="grid">
+      <a class="work" href="case-studies.html#cs-mccormick" aria-label="McCormick Law Firm case study">
+        <p class="label">Law · WordPress</p>
+        <h3>McCormick Law Firm</h3>
+        <p>A full website build for a law firm, with clean, professional design focused on trust and clarity: practice areas, attorney profiles, and contact.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">WordPress</span><span class="pl-tag">PHP</span></div><span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+      <a class="work" href="case-studies.html#cs-families" aria-label="Families United Network case study">
+        <p class="label">Nonprofit · WordPress</p>
+        <h3>Families United Network</h3>
+        <p>A website for an adoption and foster care agency. The design is warm and accessible, with resource pages, family stories, and clear calls to action.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">WordPress</span><span class="pl-tag">Migration</span></div><span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+      <a class="work" href="case-studies.html#cs-lycoming" aria-label="Lycoming Vault and Precast case study">
+        <p class="label">Manufacturing · WordPress</p>
+        <h3>Lycoming Vault &amp; Precast</h3>
+        <p>A website for a concrete precast manufacturer, built for a trade audience: product catalog, specifications, and contact forms that actually deliver.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">WordPress</span><span class="pl-tag">Forms</span></div><span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+      <a class="work" href="charte-redesign/01_home.html" target="_blank" rel="noopener" aria-label="CHARTE Center redesign mockup (opens in new tab)">
+        <p class="label">Healthcare · Redesign</p>
+        <h3>CHARTE Center</h3>
+        <p>A redesign mockup for a local psychotherapy clinic, with HTML mockups and a full CSS design system covering type, color, spacing, and components.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">HTML</span><span class="pl-tag">CSS</span></div><span class="arrow" aria-hidden="true">↗</span></div>
+      </a>
+    </div>
 
-    <a class="work-card" href="round-timer.html">
-      <div class="work-card-tag">Utility · UI</div>
-      <div class="work-card-title">Round Timer Customizer</div>
-      <div class="work-card-desc">Configurable interval timer with presets for BJJ, Boxing, Muay Thai, and Circuit Training. Audio cues, round progress dots, and pause/resume. Works offline.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">Web Audio API</span>
-          <span class="tech-pill">Vanilla JS</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-    <a class="work-card" href="tournament-bracket.html">
-      <div class="work-card-tag">Tool · Logic</div>
-      <div class="work-card-title">Tournament Bracket Generator</div>
-      <div class="work-card-desc">Single and double elimination brackets for any player count. Click to advance winners, automatic bye handling, grand final with bracket reset. Rendered in SVG.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">SVG</span>
-          <span class="tech-pill">Bracket Logic</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-    <a class="work-card" href="tech-audit.html">
-      <div class="work-card-tag">API · Business</div>
-      <div class="work-card-title">Site Audit Tool</div>
-      <div class="work-card-desc">Enter any URL and get a real performance, SEO, and mobile readiness report powered by Google PageSpeed Insights. Score out of 100 with 20+ audit line items.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">PageSpeed API</span>
-          <span class="tech-pill">Async JS</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-    <a class="work-card" href="sparring-film-room.html">
-      <div class="work-card-tag">Media · Coaching</div>
-      <div class="work-card-title">Sparring Film Room</div>
-      <div class="work-card-desc">Load any local video file and annotate it with timestamped notes. Pin markers on the timeline, click to jump, keyboard shortcuts, and export notes as a text file.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">File API</span>
-          <span class="tech-pill">Video API</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-    <a class="work-card" href="grappling-flowchart.html">
-      <div class="work-card-tag">Canvas · Interactive</div>
-      <div class="work-card-title">Grappling Flowchart Builder</div>
-      <div class="work-card-desc">Drag-and-drop node builder for mapping positional flows. Preset positions, custom nodes, click or drag to connect, labeled transitions, color coding, PNG and JSON export.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">SVG</span>
-          <span class="tech-pill">Drag & Drop</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-    <a class="work-card" href="martial-arts-style-quiz.html">
-      <div class="work-card-tag">UX · Shareable</div>
-      <div class="work-card-title">What Style Fits You?</div>
-      <div class="work-card-desc">A 10-question quiz assessing goals, body type, and training personality to recommend martial arts styles. Scores all 8 styles and ranks them with percentage match bars.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">Scoring Logic</span>
-          <span class="tech-pill">Vanilla JS</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-  </div>
-
-  <h3 style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-3);margin:2.5rem 0 1rem;">Client Work</h3>
-
-  <div class="work-grid">
-
-    <a class="work-card" href="case-studies.html#cs-mccormick" aria-label="McCormick Law Firm case study">
-      <div class="work-card-tag">WordPress · Law</div>
-      <div class="work-card-title">McCormick Law Firm</div>
-      <div class="work-card-desc">Full website build for a law firm. Clean, professional design focused on trust and clarity — practice areas, attorney profiles, and contact.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">WordPress</span>
-          <span class="tech-pill">PHP</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-    <a class="work-card" href="case-studies.html#cs-families" aria-label="Families United Network case study">
-      <div class="work-card-tag">WordPress · Nonprofit</div>
-      <div class="work-card-title">Families United Network</div>
-      <div class="work-card-desc">Website for an adoption and foster care agency. Warm, accessible design with resource pages, family stories, and clear calls to action.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">WordPress</span>
-          <span class="tech-pill">PHP</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-    <a class="work-card" href="case-studies.html#cs-lycoming" aria-label="Lycoming Vault and Precast case study">
-      <div class="work-card-tag">WordPress · Manufacturing</div>
-      <div class="work-card-title">Lycoming Vault & Precast</div>
-      <div class="work-card-desc">Website for a concrete precast product manufacturer. Product catalog, specifications, and contact — built for a trade audience.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">WordPress</span>
-          <span class="tech-pill">PHP</span>
-        </div>
-        <span class="work-arrow">→</span>
-      </div>
-    </a>
-
-    <a class="work-card" href="charte-redesign/01_home.html" target="_blank" rel="noopener" aria-label="CHARTE Center redesign mockup (opens in new tab)">
-      <div class="work-card-tag">Redesign · Healthcare</div>
-      <div class="work-card-title">CHARTE Center</div>
-      <div class="work-card-desc">Site redesign mockup for a local psychotherapy clinic. Includes HTML mockups and a full CSS design system — typography, color, spacing, and component library.</div>
-      <div class="work-card-footer">
-        <div class="work-card-tech">
-          <span class="tech-pill">HTML</span>
-          <span class="tech-pill">CSS</span>
-        </div>
-        <span class="work-arrow">↗</span>
-      </div>
-    </a>
-
+    <h3 class="sub-head">Tools I've built <span class="label">Single-file, no dependencies</span></h3>
+    <div class="grid grid--tools">
+      <a class="work work--feature" href="tech-audit.html">
+        <p class="label">The tool behind the free site check</p>
+        <h3>Site Audit Tool</h3>
+        <p>Enter any URL and get a real performance, SEO, and mobile-readiness report powered by Google PageSpeed Insights: a score out of 100 with 20+ audit line items.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">PageSpeed API</span><span class="pl-tag">Async JS</span></div><span class="arrow" aria-hidden="true">Try it →</span></div>
+      </a>
+      <a class="work" href="round-timer.html">
+        <p class="label">Utility · UI</p>
+        <h3>Round Timer Customizer</h3>
+        <p>A configurable interval timer with presets for BJJ, boxing, Muay Thai, and circuits. It has audio cues and progress dots, and it works offline.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">Web Audio API</span><span class="pl-tag">Vanilla JS</span></div><span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+      <a class="work" href="tournament-bracket.html">
+        <p class="label">Tool · Logic</p>
+        <h3>Tournament Bracket Generator</h3>
+        <p>Single and double elimination for any player count, with automatic byes and a grand final with bracket reset. Rendered in SVG.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">SVG</span><span class="pl-tag">Bracket logic</span></div><span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+      <a class="work" href="sparring-film-room.html">
+        <p class="label">Media · Coaching</p>
+        <h3>Sparring Film Room</h3>
+        <p>Load a local video and annotate it with timestamped notes. It has timeline markers and keyboard shortcuts, and it exports notes as text.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">File API</span><span class="pl-tag">Video API</span></div><span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+      <a class="work" href="grappling-flowchart.html">
+        <p class="label">Interactive · SVG</p>
+        <h3>Grappling Flowchart Builder</h3>
+        <p>A drag-and-drop node builder for mapping positional flows, with labeled transitions, color coding, and PNG and JSON export.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">SVG</span><span class="pl-tag">Drag &amp; drop</span></div><span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+      <a class="work" href="martial-arts-style-quiz.html">
+        <p class="label">UX · Shareable</p>
+        <h3>What Style Fits You?</h3>
+        <p>A 10-question quiz that scores all eight martial arts styles and ranks them with percentage match bars.</p>
+        <div class="work-foot"><div class="tags"><span class="pl-tag">Scoring logic</span><span class="pl-tag">Vanilla JS</span></div><span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+    </div>
   </div>
 </section>
-
-<hr class="divider">
 
 <!-- ABOUT -->
-<section class="section" id="about">
-  <p class="section-label" aria-hidden="true">About</p>
-  <h2 class="section-title">Background</h2>
-  <p class="section-desc">Developer, martial artist, and lifelong student. I build things that solve real problems and hold up under use.</p>
-
-  <div class="bio-grid">
-    <div class="bio-block">
-      <div class="bio-block-label">Background</div>
-      <div class="bio-block-text">Front-end developer with a degree in Web Design & Development from Full Sail University. Hands-on experience building and maintaining client sites across WordPress, PHP, and the full front-end stack. Currently expanding into modern JS frameworks and building a portfolio of standalone tools.</div>
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">About</p>
+      <h2 class="section-title" id="about-title">Hi, I'm Jamie.</h2>
+      <p class="section-desc">I'm a developer, a martial artist, and a lifelong student. I build things that solve real problems and hold up under use.</p>
     </div>
-    <div class="bio-block">
-      <div class="bio-block-label">Beyond code</div>
-      <div class="bio-block-text">First-degree black belt in Soo Bahk Do and active BJJ practitioner. Martial arts informs how I approach learning — deliberate practice, attention to detail, and long-term consistency over shortcuts.</div>
-    </div>
-    <div class="bio-block">
-      <div class="bio-block-label">Technical skills</div>
-      <div class="skill-list">
-        <span class="skill-tag">HTML</span>
-        <span class="skill-tag">CSS</span>
-        <span class="skill-tag">JavaScript</span>
-        <span class="skill-tag">PHP</span>
-        <span class="skill-tag">WordPress</span>
-        <span class="skill-tag">DNS</span>
-        <span class="skill-tag">MySQL</span>
-        <span class="skill-tag">React</span>
-        <span class="skill-tag">Node.js</span>
-        <span class="skill-tag">SVG</span>
-        <span class="skill-tag">REST APIs</span>
+    <div class="about-grid">
+      <div>
+        <p class="label">Background</p>
+        <p>I have a degree in Web Design &amp; Development from Full Sail University and hands-on experience building and maintaining client sites with WordPress, PHP, and the full front-end stack. Now I build sites for local businesses here in Pittsburgh.</p>
       </div>
-    </div>
-    <div class="bio-block">
-      <div class="bio-block-label">Currently exploring</div>
-      <div class="skill-list">
-        <span class="skill-tag">Next.js</span>
-        <span class="skill-tag">Svelte</span>
-        <span class="skill-tag">Data Analytics</span>
-        <span class="skill-tag">Sports Performance</span>
-        <span class="skill-tag">Physical Therapy Tech</span>
-        <span class="skill-tag">Brazilian Jiu-Jitsu</span>
+      <div>
+        <p class="label">Beyond code</p>
+        <p>I'm a first-degree black belt in Soo Bahk Do and an active BJJ practitioner. Martial arts shapes how I work: deliberate practice, attention to detail, and long-term consistency over shortcuts.</p>
+      </div>
+      <div>
+        <p class="label">Technical skills</p>
+        <div class="tags">
+          <span class="pl-tag">HTML</span><span class="pl-tag">CSS</span><span class="pl-tag">JavaScript</span><span class="pl-tag">PHP</span><span class="pl-tag">WordPress</span><span class="pl-tag">DNS</span><span class="pl-tag">MySQL</span><span class="pl-tag">React</span><span class="pl-tag">Node.js</span><span class="pl-tag">SVG</span><span class="pl-tag">REST APIs</span>
+        </div>
+      </div>
+      <div>
+        <p class="label">Currently exploring</p>
+        <div class="tags">
+          <span class="pl-tag">Next.js</span><span class="pl-tag">Svelte</span><span class="pl-tag">Data analytics</span><span class="pl-tag">Sports performance</span><span class="pl-tag">Physical therapy tech</span><span class="pl-tag">Brazilian Jiu-Jitsu</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
-
-<hr class="divider">
 
 <!-- CONTACT -->
-<section class="section" id="contact">
-  <p class="section-label" aria-hidden="true">Contact</p>
-  <div class="contact-card">
-    <h2 class="contact-title" id="contact-heading">Let's work together.</h2>
-    <p class="contact-desc">Open to full-time roles and freelance work — client sites, custom tools, WordPress builds, and consulting. Based in Pittsburgh, PA. Available remotely.</p>
-    <div class="contact-links">
-      <a class="contact-link accent" href="mailto:jamiejk@icloud.com">✉ Email me</a>
-      <a class="contact-link accent" href="assets/jamie-kneiss-resume.pdf" target="_blank" rel="noopener">↓ Résumé</a>
-      <a class="contact-link" href="https://www.linkedin.com/in/jjkneiss/" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in new tab)">LinkedIn</a>
-      <a class="contact-link" href="https://github.com/JJKneiss" target="_blank" rel="noopener" aria-label="GitHub profile (opens in new tab)">GitHub</a>
-      <a class="contact-link" href="https://www.instagram.com/middlewaymma" target="_blank" rel="noopener" aria-label="Instagram @middlewaymma (opens in new tab)">@middlewaymma</a>
+<section class="section" id="contact" aria-labelledby="contact-title" style="border-bottom:none">
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <h2 id="contact-title">Is your site pulling its weight?</h2>
+        <p>Send me your website and I'll send back a free site check, covering speed, mobile, and Google basics on one page in plain English. No strings attached.</p>
+      </div>
+      <div class="actions">
+        <a class="pl-btn pl-btn--solid" href="mailto:jamiejk@icloud.com?subject=Free%20site%20check&amp;body=My%20website%20is%3A%20">Get a free site check</a>
+        <a class="pl-btn" href="https://www.linkedin.com/in/jjkneiss/" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in new tab)">LinkedIn</a>
+        <a class="pl-btn" href="https://github.com/JJKneiss" target="_blank" rel="noopener" aria-label="GitHub profile (opens in new tab)">GitHub</a>
+      </div>
+      <p class="cta-note">Hiring for a front-end role? I'm open to full-time work in Pittsburgh or remote. <a href="assets/jamie-kneiss-resume.pdf" target="_blank" rel="noopener">Download my résumé</a>.</p>
     </div>
   </div>
 </section>
 
-<footer>
-  <span class="footer-name">Jamie Kneiss</span>
-  <span class="footer-note">© 2026 Jamie Kneiss · Built with HTML, CSS & JS</span>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <span class="brand"><span class="brand-word">plumbline</span><span class="brand-by">Built straight. Built local.</span></span>
+    <span class="label">© 2026 Jamie Kneiss · Pittsburgh, PA · <a href="https://www.instagram.com/middlewaymma" target="_blank" rel="noopener" style="color:inherit">@middlewaymma</a></span>
+  </div>
 </footer>
 
 </body>
