@@ -49,7 +49,7 @@ a { color: var(--plumb-ink); text-underline-offset: 4px; }
 .nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--line); }
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); height: 64px; }
 .brand { display: flex; align-items: center; gap: var(--space-2); color: var(--ink); text-decoration: none; }
-.brand svg { width: 18px; height: 24px; }
+.brand svg { width: 32px; height: 32px; }
 .brand-word { font-family: var(--font-display); font-weight: 800; font-size: 24px; letter-spacing: -.03em; line-height: 1; }
 .brand-by { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--ink-muted); margin-left: var(--space-1); }
 .nav-links { display: flex; align-items: center; gap: var(--space-4); list-style: none; padding: 0; }
@@ -84,9 +84,8 @@ a { color: var(--plumb-ink); text-underline-offset: 4px; }
 .hero h1 .hl { box-shadow: inset 0 -.28em 0 var(--plumb); }
 .hero-sub { font-size: 20px; line-height: 30px; color: var(--ink-muted); max-width: 560px; margin-bottom: var(--space-5); }
 .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-.hero-plumb { position: absolute; top: 0; right: 12%; width: 48px; height: 340px; color: var(--ink); pointer-events: none; }
 @media (prefers-color-scheme: dark) { .hero h1 .hl { box-shadow: none; color: var(--plumb); } }
-@media (max-width: 900px) { .hero-plumb { display: none; } .hero .wrap { padding-top: var(--space-6); padding-bottom: var(--space-6); } }
+@media (max-width: 900px) { .hero .wrap { padding-top: var(--space-6); padding-bottom: var(--space-6); } }
 
 /* Sections */
 .section { padding: 96px 0; border-bottom: 1px solid var(--line); }
@@ -100,12 +99,12 @@ a { color: var(--plumb-ink); text-underline-offset: 4px; }
 .sub-head .label { font-weight: 500; }
 @media (max-width: 600px) { .section { padding: var(--space-6) 0; } .section-title { font-size: 36px; line-height: 40px; } }
 
-/* Service cards (plumb-line signature) */
+/* Service cards with price chips */
 .grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-.svc { position: relative; background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-4); padding-left: calc(var(--space-4) + var(--space-3)); }
-.svc::before { content: ""; position: absolute; left: var(--space-4); top: 0; width: 1px; height: var(--space-5); background: var(--ink); }
-.svc::after { content: ""; position: absolute; left: calc(var(--space-4) - 4px); top: var(--space-5); border-left: 4.5px solid transparent; border-right: 4.5px solid transparent; border-top: 10px solid var(--plumb); }
-.svc .label { margin-bottom: var(--space-2); }
+.svc { background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-4); }
+.price { display: inline-block; background: var(--plumb); color: var(--on-plumb); font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 32px; letter-spacing: -.01em; padding: 0 var(--space-2); border-radius: var(--radius-sm); margin-bottom: var(--space-3); }
+.price span { font-size: 15px; font-weight: 700; }
+.fine { margin-top: var(--space-4); font-size: 14px; line-height: 20px; color: var(--ink-muted); max-width: 720px; }
 .svc h3 { font-size: 20px; line-height: 26px; font-weight: 700; margin-bottom: var(--space-2); }
 .svc p { font-size: 15px; line-height: 22px; color: var(--ink-muted); }
 
