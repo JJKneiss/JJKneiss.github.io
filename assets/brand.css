@@ -114,6 +114,7 @@ a { color: var(--plumb-ink); text-underline-offset: 4px; }
 .work:hover .arrow { transform: translateX(4px); }
 .work h3 { font-size: 20px; line-height: 26px; font-weight: 700; }
 .work p { font-size: 15px; line-height: 22px; color: var(--ink-muted); flex: 1; }
+.work p.label { flex: none; font-size: 12px; line-height: 16px; }
 .work-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
 .arrow { font-weight: 700; color: var(--ink); transition: transform .15s; }
 @media (prefers-reduced-motion: reduce) { .work:hover .arrow { transform: none; } }
@@ -183,3 +184,4 @@ html { scroll-padding-top: 80px; }
   .nav-links a { font-size: 15px; }
 }
 @media (max-width: 400px) { .nav .wrap { padding-left: var(--space-3); padding-right: var(--space-3); } .nav .brand-word { font-size: 20px; } .brand svg { width: 28px; height: 28px; } .nav-cta { padding: 0 10px; font-size: 13px; } }
+.feature-row { margin-top: var(--space-4); }
