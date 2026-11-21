@@ -188,3 +188,15 @@ html { scroll-padding-top: 80px; }
 
 .cta-contact { font-size: 17px; }
 .cta-contact a { color: var(--on-plumb); font-weight: 700; }
+
+/* Homepage review updates */
+.proof { margin-top: var(--space-4); font-family: var(--font-mono); font-size: 13px; line-height: 18px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
+.svc { position: relative; }
+.svc--rec { border: 2px solid var(--ink); }
+.rec { position: absolute; top: -12px; right: var(--space-4); background: var(--ink); color: var(--paper); font-family: var(--font-mono); font-size: 11px; line-height: 16px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 8px; border-radius: var(--radius-sm); }
+.svc .rec { font-size: 11px; line-height: 16px; color: var(--paper); }
+.work { overflow: hidden; }
+.work-shot { display: block; margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-4)) 0; width: calc(100% + 2 * var(--space-4)); max-width: none; height: auto; aspect-ratio: 800 / 496; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
+.footer .wrap { flex-wrap: wrap; }
+.footer-hire { flex-basis: 100%; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.footer-hire a { color: var(--plumb-ink); font-weight: 700; }
