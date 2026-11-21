@@ -200,3 +200,6 @@ html { scroll-padding-top: 80px; }
 .footer .wrap { flex-wrap: wrap; }
 .footer-hire { flex-basis: 100%; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
 .footer-hire a { color: var(--plumb-ink); font-weight: 700; }
+.about-intro { margin-bottom: 0; }
+.about-main .section-head { margin-bottom: var(--space-5); }
+.about-main .about-grid { gap: var(--space-4) var(--space-5); }
