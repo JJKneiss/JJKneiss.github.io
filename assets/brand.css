@@ -185,4 +185,6 @@ html { scroll-padding-top: 80px; }
   .nav-links a { font-size: 15px; }
 }
 @media (max-width: 400px) { .nav .wrap { padding-left: var(--space-3); padding-right: var(--space-3); } .nav .brand-word { font-size: 20px; } .brand svg { width: 34px; height: 34px; } .nav-cta { padding: 0 10px; font-size: 13px; } }
-.feature-row { margin-top: var(--space-4); }
+
+.cta-contact { font-size: 17px; }
+.cta-contact a { color: var(--on-plumb); font-weight: 700; }
