@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self' https://api.web3forms.com">
 <title>Jamie Kneiss Web Studio — A website that works as hard as you do</title>
 <meta name="description" content="Jamie Kneiss Web Studio builds fast, mobile-first websites for Pittsburgh's small businesses. Start with a free site check.">
 <meta name="theme-color" content="#F5F1E8">
@@ -164,11 +164,37 @@
         <h2 id="contact-title">Is your site pulling its weight?</h2>
         <p>Send me your website and I'll send back a free site check, covering speed, mobile, and Google basics on one page in plain English. No strings attached.</p>
       </div>
-      <div class="actions">
-        <a class="pl-btn pl-btn--solid" href="mailto:jamiejk@icloud.com?subject=Free%20site%20check&amp;body=My%20website%20is%3A%20">Get a free site check</a>
-        <a class="pl-btn" href="tel:+15705754249">Call or text (570) 575-4249</a>
-      </div>
-      <p class="cta-contact">Or email <a href="mailto:jamiejk@icloud.com">jamiejk@icloud.com</a></p>
+      <form class="cta-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="b522e82f-71cb-4642-acea-c876bb1bd898">
+        <input type="hidden" name="subject" value="Free site check request">
+        <input type="hidden" name="from_name" value="jjkneiss.github.io">
+        <input type="hidden" name="redirect" value="https://jjkneiss.github.io/thanks.html">
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="field">
+          <label for="cf-name">Your name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="cf-phone">Phone <span class="opt">(optional)</span></label>
+          <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="cf-site">Your website <span class="opt">(if you have one)</span></label>
+          <input id="cf-site" name="website" type="text" inputmode="url" placeholder="yourbusiness.com">
+        </div>
+        <div class="field field--full">
+          <label for="cf-msg">Anything I should know? <span class="opt">(optional)</span></label>
+          <textarea id="cf-msg" name="message" rows="4"></textarea>
+        </div>
+        <div class="actions field--full">
+          <button class="pl-btn pl-btn--solid" type="submit">Get my free site check</button>
+          <a class="pl-btn" href="tel:+15705754249">Or call or text (570) 575-4249</a>
+        </div>
+      </form>
     </div>
   </div>
 </section>

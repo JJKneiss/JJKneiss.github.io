@@ -203,3 +203,18 @@ html { scroll-padding-top: 80px; }
 .about-intro { margin-bottom: 0; }
 .about-main .section-head { margin-bottom: var(--space-5); }
 .about-main .about-grid { gap: var(--space-4) var(--space-5); }
+
+/* Contact form in the CTA band */
+.cta-form { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); max-width: 760px; }
+.cta-form .field { display: flex; flex-direction: column; gap: var(--space-2); }
+.cta-form .field--full { grid-column: 1 / -1; }
+.cta-form label { font-weight: 700; font-size: 15px; line-height: 20px; }
+.cta-form .opt { font-weight: 400; }
+.cta-form input, .cta-form textarea { font: inherit; font-size: 16px; color: #1A1F26; background: #FFFFFF; border: 2px solid var(--on-plumb); border-radius: var(--radius-md); padding: 10px 12px; min-height: 48px; box-sizing: border-box; width: 100%; }
+.cta-form textarea { resize: vertical; min-height: 104px; }
+.cta-form input::placeholder { color: #545B66; }
+.cta :focus-visible { outline: 3px solid var(--on-plumb); outline-offset: 2px; }
+.cta-form .actions { margin-top: var(--space-2); }
+.cta-form button { font-family: inherit; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+@media (max-width: 600px) { .cta-form { grid-template-columns: 1fr; } }
