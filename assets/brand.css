@@ -216,5 +216,5 @@ html { scroll-padding-top: 80px; }
 .cta :focus-visible { outline: 3px solid var(--on-plumb); outline-offset: 2px; }
 .cta-form .actions { margin-top: var(--space-2); }
 .cta-form button { font-family: inherit; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.hp { display: none; }
 @media (max-width: 600px) { .cta-form { grid-template-columns: 1fr; } }
