@@ -58,9 +58,10 @@ function addEntry(){entries.push('');renderSetup();setTimeout(()=>{const ins=doc
 function removeEntry(i){if(entries.length<=2)return;entries.splice(i,1);renderSetup();}
 function updateEntry(i,v){entries[i]=v;updateHint();}
 function updateHint(){const n=entries.filter(e=>e.trim()).length;document.getElementById('hintMsg').textContent=n<2?'Need at least 2':''+n+' participant'+(n===1?'':'s');}
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function renderSetup(){
   document.getElementById('entryList').innerHTML=entries.map((e,i)=>`
-    <div class="tb-er"><input class="tb-input tb-ni" placeholder="Participant ${i+1}" value="${e}" oninput="updateEntry(${i},this.value)" onkeydown="if(event.key==='Enter')addEntry()">
+    <div class="tb-er"><input class="tb-input tb-ni" placeholder="Participant ${i+1}" value="${escAttr(e)}" oninput="updateEntry(${i},this.value)" onkeydown="if(event.key==='Enter')addEntry()">
     <button class="tb-rm" onclick="removeEntry(${i})" aria-label="Remove">&times;</button></div>`).join('');
   updateHint();
 }

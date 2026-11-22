@@ -757,6 +757,20 @@ function loadJSON(input) {
   reader.onload = e => {
     try {
       const data = JSON.parse(e.target.result);
+      // Validate before touching the canvas: IDs end up in markup, so only allow the shapes this tool writes
+      const isNum = v => typeof v === 'number' && isFinite(v);
+      const isStr = v => typeof v === 'string';
+      if(!data || !Array.isArray(data.nodes) || !Array.isArray(data.edges)) throw new Error('bad shape');
+      const nodeIds = new Set();
+      data.nodes.forEach(n => {
+        if(!n || !isStr(n.id) || !/^n\d{1,6}$/.test(n.id) || !isStr(n.name) || (n.notes != null && !isStr(n.notes))
+          || !n.pos || !isNum(n.pos.x) || !isNum(n.pos.y) || (n.colorName != null && !isStr(n.colorName))) throw new Error('bad node');
+        nodeIds.add(n.id);
+      });
+      data.edges.forEach(ed => {
+        if(!ed || !isStr(ed.id) || !/^e\d{1,6}$/.test(ed.id) || !nodeIds.has(ed.from) || !nodeIds.has(ed.to)
+          || (ed.label != null && !isStr(ed.label))) throw new Error('bad edge');
+      });
       // Clear current
       Object.keys(nodes).forEach(id => { const el = document.getElementById('node-' + id); if(el) el.remove(); });
       nodes = {}; edges = [];
@@ -769,19 +783,19 @@ function loadJSON(input) {
       });
       // Load edges
       data.edges.forEach(edge => {
-        edges.push(edge);
+        edges.push({ id: edge.id, from: edge.from, to: edge.to, label: edge.label || '' });
         edgeCounter = Math.max(edgeCounter, parseInt(edge.id.replace('e','')) || 0);
       });
       redrawEdges();
       updateHint();
-    } catch(err) { alert('Could not load file — invalid JSON.'); }
+    } catch(err) { alert('Could not load file: it is not a valid flowchart file.'); }
   };
   reader.readAsText(file);
   input.value = '';
 }
 
 function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 // Redraw edges on window resize
