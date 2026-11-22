@@ -160,9 +160,10 @@
 <section class="section" id="contact" aria-labelledby="contact-title" style="border-bottom:none">
   <div class="wrap">
     <div class="cta">
-      <div>
+      <div class="cta-pitch">
         <h2 id="contact-title">Is your site pulling its weight?</h2>
         <p>Send me your website and I'll send back a free site check, covering speed, mobile, and Google basics on one page in plain English. No strings attached.</p>
+        <p class="cta-alt">Rather talk? Call or text <a href="tel:+15705754249">(570)&nbsp;575-4249</a></p>
       </div>
       <form class="cta-form" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="b522e82f-71cb-4642-acea-c876bb1bd898">
@@ -183,16 +184,16 @@
           <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
         </div>
         <div class="field">
-          <label for="cf-site">Your website <span class="opt">(if you have one)</span></label>
+          <label for="cf-site">Your website <span class="opt">(optional)</span></label>
           <input id="cf-site" name="website" type="text" inputmode="url" placeholder="yourbusiness.com">
         </div>
         <div class="field field--full">
           <label for="cf-msg">Anything I should know? <span class="opt">(optional)</span></label>
           <textarea id="cf-msg" name="message" rows="4"></textarea>
         </div>
-        <div class="actions field--full">
-          <button class="pl-btn pl-btn--solid" type="submit">Get my free site check</button>
-          <a class="pl-btn" href="tel:+15705754249">Or call or text (570) 575-4249</a>
+        <div class="field--full">
+          <button class="pl-btn pl-btn--primary cta-submit" type="submit">Get my free site check</button>
+          <p class="form-note">Only your name and email are required.</p>
         </div>
       </form>
     </div>
